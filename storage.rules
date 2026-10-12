@@ -7,9 +7,14 @@ service firebase.storage {
         && firestore.get(/databases/(default)/documents/adminUsers/$(request.auth.uid)).data.enabled == true;
     }
 
-    match /projects/{allPaths=**} {
-      allow read: if true;
+    function isManagedImagePath(collectionName) {
+      return collectionName in ['projects', 'experience', 'products', 'site_content'];
+    }
+
+    match /{collectionName}/{allPaths=**} {
+      allow read: if isManagedImagePath(collectionName);
       allow write: if isAdmin()
+        && isManagedImagePath(collectionName)
         && (request.resource == null
           || (request.resource.size < 10 * 1024 * 1024
             && request.resource.contentType.matches('image/.*')));

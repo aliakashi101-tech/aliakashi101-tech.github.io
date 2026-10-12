@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.admin-reference-scope {
+  min-height: 100vh;
+  color: #f5f7fa;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--black);
+}
+
+.admin-reference-scope .bg-zinc-950 { background-color: var(--black-soft); }
+.admin-reference-scope .border-zinc-800 { border-color: var(--line); }
+.admin-reference-scope .text-zinc-500 { color: var(--gray); }

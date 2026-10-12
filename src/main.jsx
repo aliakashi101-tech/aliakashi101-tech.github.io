@@ -5,8 +5,11 @@ import { starterProjects, localize } from './projectData';
 import portfolioMarkup from './portfolio.html?raw';
 import { initializeLegacyPage } from './legacyInteractions';
 import './app.css';
+import './admin-reference/admin.css';
 
 const AdminApp = lazy(() => import('./AdminApp').then((module) => ({ default: module.AdminApp })));
+const PublicAnalytics = lazy(() => import('./PublicAnalytics'));
+const PublicContentLayer = lazy(() => import('./PublicContentLayer').then((module) => ({ default: module.PublicContentLayer })));
 
 function currentLanguage() {
   try { return localStorage.getItem('portfolio-language') === 'ar' ? 'ar' : 'en'; }
@@ -45,7 +48,7 @@ function ProjectGallery({ project, name, language }) {
     {lightboxOpen && photos.length > 0 && <div className="firebase-lightbox" role="dialog" aria-modal="true" aria-label={name} onMouseDown={(event) => { if (event.target === event.currentTarget) setLightboxOpen(false); }}>
       <button className="firebase-lightbox-close" type="button" onClick={() => setLightboxOpen(false)} aria-label={language === 'ar' ? 'إغلاق' : 'Close'}>×</button>
       {photos.length > 1 && <button type="button" onClick={() => setActive((active - 1 + photos.length) % photos.length)} aria-label={language === 'ar' ? 'السابق' : 'Previous'}>‹</button>}
-      <img src={photos[0]} alt={name} />
+      <img src={photos[active]} alt={name} />
       {photos.length > 1 && <button type="button" onClick={() => setActive((active + 1) % photos.length)} aria-label={language === 'ar' ? 'التالي' : 'Next'}>›</button>}
     </div>}
   </>;
@@ -57,7 +60,7 @@ function ProjectCard({ project, index, language }) {
   const collaboration = localize(project, 'collaboration_label', language);
   const description = localize(project, 'description', language);
   const installs = Number(String(project.app_installs || '').replaceAll(',', ''));
-  return <article className="project-card firebase-project-card">
+  return <article className="project-card firebase-project-card" data-analytics-target="project" data-analytics-id={project.id}>
     <div className="project-index">{language === 'ar' ? `المشروع ${String(index + 1).padStart(2, '0')}` : `PROJECT ${String(index + 1).padStart(2, '0')}`}</div>
     <ProjectGallery project={project} name={name} language={language} />
     <h3>{name || (language === 'ar' ? 'مشروع بدون اسم' : 'Untitled project')}</h3>
@@ -113,7 +116,7 @@ function PortfolioApp() {
     const projectsHost = document.getElementById('project-grid');
     if (projectsHost) createRoot(projectsHost).render(<PublicProjects />);
   }, []);
-  return <div className="portfolio-content" dangerouslySetInnerHTML={{ __html: portfolioMarkup }} />;
+  return <><div className="portfolio-content" dangerouslySetInnerHTML={{ __html: portfolioMarkup }} />{isFirebaseConfigured && <Suspense fallback={null}><PublicContentLayer /><PublicAnalytics /></Suspense>}</>;
 }
 
 createRoot(document.getElementById('app-root')).render(<PortfolioApp />);

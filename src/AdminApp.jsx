@@ -5,6 +5,8 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { auth, db, isFirebaseConfigured, storage } from './firebase';
 import { starterProjects } from './projectData';
 
+const AdminWorkspace = lazy(() => import('./AdminWorkspace'));
+
 const projectCollection = () => collection(db, 'projects');
 const emptyProject = (id) => ({
   id, name_en: '', name_ar: '', description_en: '', description_ar: '', tags_en: [], tags_ar: [],
@@ -206,5 +208,10 @@ export function AdminApp() {
   if (!isFirebaseConfigured) return <main className="admin-login"><div className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><h1>Firebase setup needed</h1><p className="admin-muted">Add your Firebase web configuration to the Vite environment before using the project manager. See FIREBASE_SETUP.md.</p></div></main>;
   if (checking) return <main className="admin-login"><p className="admin-muted">Checking admin access…</p></main>;
   if (!user) return <>{message && <p className="admin-global-message" role="status">{message}</p>}<Login onSignedIn={setUser} /></>;
-  return <Dashboard user={user} onSignOut={async () => { await signOut(auth); setUser(null); }} />;
+  return <AdminWorkspace
+    userEmail={user.email || 'Ali Akashi'}
+    onBack={() => { window.location.hash = '/'; }}
+    onDataChanged={() => window.dispatchEvent(new CustomEvent('admin-data-updated'))}
+    onSignOut={async () => { await signOut(auth); setUser(null); }}
+  />;
 }
