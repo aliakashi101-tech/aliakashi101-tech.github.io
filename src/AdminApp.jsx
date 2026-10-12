@@ -29,16 +29,62 @@ function Login({ onSignedIn }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [language, setLanguage] = useState(() => {
+    try { return localStorage.getItem('portfolio-admin-language') === 'ar' ? 'ar' : 'en'; }
+    catch { return 'en'; }
+  });
+  const isArabic = language === 'ar';
+  const copy = isArabic ? {
+    back: 'العودة إلى الموقع', eyebrow: 'مساحة خاصة', title: 'تسجيل دخول المسؤول',
+    description: 'سجّل الدخول لإدارة محتوى معرض أعمالك.', email: 'عنوان البريد الإلكتروني',
+    password: 'كلمة المرور', placeholder: 'you@example.com', signIn: 'تسجيل الدخول',
+    signingIn: 'جارٍ تسجيل الدخول…', footer: 'تتطلب مساحة العمل هذه حساب Firebase بالبريد الإلكتروني وكلمة المرور.',
+    invalid: 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', failed: 'تعذر تسجيل الدخول. حاول مرة أخرى.',
+  } : {
+    back: 'Back to portfolio', eyebrow: 'PRIVATE WORKSPACE', title: 'Admin sign in',
+    description: 'Sign in to manage your portfolio content.', email: 'Email address',
+    password: 'Password', placeholder: 'you@example.com', signIn: 'Sign in',
+    signingIn: 'Signing in…', footer: 'This workspace requires a Firebase Email/Password account.',
+    invalid: 'Email or password is incorrect.', failed: 'Unable to sign in. Please try again.',
+  };
+  function toggleLanguage() {
+    const nextLanguage = isArabic ? 'en' : 'ar';
+    setLanguage(nextLanguage);
+    try { localStorage.setItem('portfolio-admin-language', nextLanguage); } catch {}
+  }
   async function submit(event) {
     event.preventDefault(); setError(''); setBusy(true);
     try {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, email.trim(), password);
       onSignedIn();
-    } catch (err) { setError(err?.code === 'auth/invalid-credential' ? 'Email or password is incorrect.' : (err?.message || 'Unable to sign in.')); }
+    } catch (err) { setError(err?.code === 'auth/invalid-credential' || err?.code === 'auth/user-not-found' || err?.code === 'auth/wrong-password' ? copy.invalid : (err?.message || copy.failed)); }
     finally { setBusy(false); }
   }
-  return <main className="admin-login"><form onSubmit={submit} className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><p className="admin-eyebrow">ALI AKASHI · PORTFOLIO</p><h1>Admin sign in</h1><p className="admin-muted">Use the Firebase account provisioned for this portfolio.</p><Field label="Email address" type="email" autoComplete="email" required value={email} onChange={setEmail} /><Field label="Password" type="password" autoComplete="current-password" required value={password} onChange={setPassword} /><button className="admin-primary" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>{error && <p className="admin-error" role="alert">{error}</p>}</form></main>;
+  return <main className="admin-login" dir={isArabic ? 'rtl' : 'ltr'}>
+    <div className="admin-login-wrap">
+      <div className="admin-login-topbar">
+        <a href="#/" className="admin-back">{isArabic ? `${copy.back} ←` : `← ${copy.back}`}</a>
+        <button type="button" className="admin-language-toggle" onClick={toggleLanguage} lang={isArabic ? 'en' : 'ar'}>{isArabic ? 'English' : 'العربية'}</button>
+      </div>
+      <form onSubmit={submit} className="admin-login-card">
+        <div className="admin-login-brand-row">
+          <span className="admin-login-logo" aria-label="Ali Akashi">AA</span>
+          <svg className="admin-login-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v3"/></svg>
+        </div>
+        <p className="admin-eyebrow">{copy.eyebrow}</p>
+        <h1>{copy.title}</h1>
+        <p className="admin-login-description">{copy.description}</p>
+        <div className="admin-login-fields">
+          <label className="admin-login-field"><span>{copy.email}</span><div className="admin-login-input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><input type="email" dir="ltr" autoComplete="email" placeholder={copy.placeholder} required value={email} onChange={(event) => setEmail(event.target.value)} /></div></label>
+          <label className="admin-login-field"><span>{copy.password}</span><input type="password" dir="ltr" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} /></label>
+        </div>
+        <button className="admin-login-submit" disabled={busy}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5.5 5.5v5.8c0 4.4 2.8 7.6 6.5 9.7 3.7-2.1 6.5-5.3 6.5-9.7V5.5L12 3Z"/><path d="m9.5 12 1.7 1.7 3.5-3.8"/></svg>{busy ? copy.signingIn : copy.signIn}</button>
+        {error && <p className="admin-login-error" role="alert">{error}</p>}
+      </form>
+      <p className="admin-login-footer">{copy.footer}</p>
+    </div>
+  </main>;
 }
 
 function ProjectEditor({ project, onClose, onSaved, onError }) {
