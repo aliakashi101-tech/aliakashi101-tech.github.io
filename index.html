@@ -3,181 +3,301 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#061226">
-  <meta name="description" content="Ali Akashi — Data Analyst from Dubai, UAE. Python, SQL, machine learning, NLP, data visualization, and selected website work.">
-  <title>Ali Akashi | Data Analyst</title>
+  <meta name="theme-color" content="#05080e">
+  <meta name="description" content="Ali Akashi is a data analyst in Dubai, UAE, focused on Python, SQL, machine learning, NLP, dashboards, and digital products.">
+  <title>Ali Akashi — Data Analyst</title>
   <style>
-    :root { color-scheme: dark; --bg:#050b16; --surface:#09162a; --surface-2:#0d1d35; --blue:#12325c; --blue-2:#1b467d; --accent:#6caeff; --white:#f5f8fc; --muted:#a9b9ce; --line:#19304e; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; background:radial-gradient(ellipse at 50% -10%, #10264a 0, var(--bg) 50%); color:var(--white); font:16px/1.65 "Segoe UI", Arial, sans-serif; }
-    a { color:var(--accent); text-decoration:none; }
-    a:hover { color:#b7d8ff; }
-    a:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
-    .page { width:min(100% - 36px, 980px); margin:0 auto; padding:48px 0 26px; }
-    .profile { padding:32px; background:linear-gradient(145deg,rgba(13,29,53,.97),rgba(7,17,33,.97)); border:1px solid var(--line); border-radius:16px; box-shadow:0 24px 90px #0005; }
-    .intro { display:grid; grid-template-columns:1fr 164px; align-items:center; gap:30px; }
-    h1 { font-size:clamp(25px,4vw,38px); line-height:1.25; letter-spacing:-.045em; margin:0 0 12px; }
-    h1 .wave { display:inline-block; }
-    .lead { color:#d5dfec; font-size:17px; margin:0; }
-    .lead strong { color:var(--accent); font-weight:650; }
-    .location { color:var(--muted); font-size:14px; margin:9px 0 0; }
-    .portrait { width:156px; height:156px; object-fit:cover; object-position:center 36%; border:3px solid var(--blue-2); border-radius:50%; box-shadow:0 0 0 7px #1b467d30; }
-    .divider { height:1px; background:var(--line); margin:27px 0; }
-    .stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; justify-items:center; }
-    .stats img { display:block; width:100%; max-width:440px; height:auto; min-height:145px; object-fit:contain; }
-    h2 { font-size:20px; line-height:1.3; letter-spacing:-.025em; margin:0 0 14px; }
-    .section-label { color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px; }
-    .about { color:var(--muted); margin:0; max-width:820px; }
-    .skills { display:flex; justify-content:flex-start; align-items:center; flex-wrap:wrap; gap:14px; }
-    .skill { display:inline-flex; align-items:center; gap:10px; padding:9px 13px; background:var(--surface-2); border:1px solid var(--line); border-radius:8px; color:#e1eaf5; font-size:14px; }
-    .skill img { width:27px; height:27px; object-fit:contain; }
-    .work-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-    .work-card { min-height:132px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:18px; transition:border-color .2s,transform .2s; }
-    .work-card:hover { border-color:var(--accent); transform:translateY(-2px); }
-    .work-card h3 { margin:0 0 6px; font-size:16px; }
-    .work-card p { color:var(--muted); font-size:13px; margin:0 0 12px; }
-    .visit { font-size:13px; font-weight:650; }
-    .projects { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-    .project { padding:18px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; }
-    .project h3 { font-size:16px; margin:0 0 8px; }
-    .project p { color:var(--muted); font-size:13px; margin:0 0 13px; }
-    .chips { display:flex; flex-wrap:wrap; gap:7px; }
-    .chip { padding:3px 9px; border-radius:20px; border:1px solid #24466d; background:#0b1a31; color:#c4d9f2; font-size:11px; }
-    .experience { display:grid; grid-template-columns:170px 1fr; gap:20px; padding:18px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; }
-    .date { color:var(--accent); font-size:12px; font-weight:650; }
-    .experience h3 { margin:0; font-size:16px; }
-    .experience p { color:var(--muted); font-size:13px; margin:5px 0 0; }
-    .education { color:var(--muted); margin:0; }
-    .education strong { color:var(--white); }
-    .badges { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
-    .badge { display:inline-flex; min-height:34px; align-items:center; padding:5px 12px; border:1px solid #24466d; border-radius:5px; background:var(--blue); color:white; font-weight:700; font-size:12px; letter-spacing:.04em; }
-    .badge:hover { background:var(--blue-2); color:white; }
-    .foot { color:#7488a4; text-align:center; font-size:12px; padding:20px 0 0; }
-    @media (max-width:650px) {
-      .page { width:min(100% - 22px, 520px); padding-top:16px; }
-      .profile { padding:21px 17px; border-radius:12px; }
-      .intro { grid-template-columns:1fr 92px; gap:13px; }
-      .portrait { width:88px; height:88px; border-width:2px; box-shadow:0 0 0 4px #1b467d30; }
-      .lead { font-size:15px; }
-      .location { font-size:12px; }
-      .stats { grid-template-columns:1fr; gap:7px; }
-      .stats img { min-height:0; max-width:440px; }
-      .work-grid,.projects { grid-template-columns:1fr; }
-      .experience { grid-template-columns:1fr; gap:6px; }
+    :root {
+      color-scheme: dark;
+      --black: #05080e;
+      --black-soft: #090e17;
+      --panel: #0e1520;
+      --panel-light: #121c29;
+      --blue: #174577;
+      --blue-strong: #225a94;
+      --blue-light: #78b5f5;
+      --white: #f5f7fa;
+      --gray: #a5afbd;
+      --gray-dark: #667383;
+      --line: #202b39;
     }
-    @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto} *,*::before,*::after{transition-duration:.01ms!important} }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body { margin: 0; background: var(--black); color: var(--white); font: 16px/1.7 "Segoe UI", Arial, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 4px; }
+    img { max-width: 100%; }
+    .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+    .topbar { position: fixed; z-index: 50; inset: 0 0 auto; border-bottom: 1px solid transparent; padding: 21px 0; transition: background .25s, border-color .25s, padding .25s; }
+    .topbar.scrolled { background: rgba(5,8,14,.91); border-color: var(--line); padding: 13px 0; backdrop-filter: blur(14px); }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .brand { font-size: 23px; font-weight: 800; letter-spacing: -.08em; }
+    .brand span { color: var(--blue-light); }
+    .nav-links { display: flex; gap: 27px; align-items: center; }
+    .nav-links a { color: #c2cbd6; font-size: 12px; font-weight: 650; text-transform: uppercase; letter-spacing: .11em; transition: color .2s; }
+    .nav-links a:hover { color: var(--blue-light); }
+    .nav-resume { border: 1px solid var(--blue-strong); border-radius: 999px; padding: 8px 15px; color: var(--white); font-size: 12px; font-weight: 700; transition: background .2s; }
+    .nav-resume:hover { background: var(--blue); }
+    .menu-toggle { display: none; border: 1px solid var(--line); color: var(--white); background: var(--panel); border-radius: 8px; padding: 8px 11px; font-size: 18px; }
+    .hero { min-height: 760px; min-height: max(760px, 100svh); position: relative; overflow: hidden; display: flex; align-items: center; background: var(--black); }
+    .hero::before { content: ""; position: absolute; top: -15%; right: -10%; width: 70%; height: 135%; background: linear-gradient(145deg, #111923, #0a111b 70%); transform: skewX(-12deg); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--black) 0%, transparent 36%, transparent 82%, rgba(5,8,14,.4) 100%); pointer-events: none; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 72px; padding-top: 78px; }
+    .hero-copy { max-width: 660px; }
+    .eyebrow, .section-kicker { color: var(--blue-light); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .25em; }
+    .hero h1 { font-size: clamp(64px, 9vw, 112px); line-height: .91; letter-spacing: -.085em; margin: 17px 0 25px; }
+    .hero h1 span { color: #aeb8c5; }
+    .hero-description { max-width: 590px; color: #b6c0cc; font-size: clamp(17px, 2vw, 21px); line-height: 1.65; }
+    .hero-description strong { color: var(--white); font-weight: 650; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 29px 0 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 11px; padding: 13px 19px; border: 1px solid var(--blue-strong); border-radius: 13px; font-size: 14px; font-weight: 700; transition: transform .2s, background .2s, border-color .2s; }
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { background: var(--blue-strong); color: white; box-shadow: 0 8px 28px #17457735; }
+    .button.primary:hover { background: #2d6eac; }
+    .button.outline { border-color: #435061; color: var(--white); }
+    .button.outline:hover { border-color: var(--blue-light); background: #17457720; }
+    .hero-socials { display: flex; gap: 18px; color: #9eabb9; font-size: 13px; }
+    .hero-socials a:hover { color: var(--blue-light); }
+    .portrait-wrap { position: relative; width: min(100%, 440px); aspect-ratio: 4 / 5; margin: 0 auto; }
+    .portrait-frame { position: absolute; inset: 0; border: 2px solid #225a946e; border-radius: 18px; transform: translate(13px, 13px); }
+    .portrait-image { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 18px; overflow: hidden; background: #151c25; box-shadow: 0 28px 80px #0008; }
+    .portrait-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 34%; }
+    .hero-mobile-portrait { display: none; }
+    .scroll-cue { position: absolute; z-index: 2; bottom: 24px; left: 50%; width: 23px; height: 37px; border: 2px solid #526070; border-radius: 20px; transform: translateX(-50%); }
+    .scroll-cue::after { content: ""; position: absolute; top: 6px; left: 8px; width: 3px; height: 7px; border-radius: 4px; background: var(--blue-light); animation: scroll 1.5s infinite; }
+    @keyframes scroll { 0%{opacity:0;transform:translateY(0)} 40%{opacity:1} 100%{opacity:0;transform:translateY(13px)} }
+    .section { position: relative; padding: 112px 0; overflow: hidden; scroll-margin-top: 70px; }
+    .section.alt { background: #080d14; }
+    .section-head { margin-bottom: 48px; }
+    .section-head.center { text-align: center; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 52px); line-height: 1.13; letter-spacing: -.06em; margin: 10px 0 13px; }
+    .section-head h2 span { color: var(--blue-light); }
+    .section-head p { color: var(--gray); max-width: 650px; font-size: 16px; margin: 0; }
+    .section-head.center p { margin: 0 auto; }
+    .about-grid { display: grid; grid-template-columns: 1fr .9fr; gap: 72px; align-items: center; }
+    .about-text p { margin: 0 0 19px; color: var(--gray); font-size: 17px; }
+    .highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 27px; }
+    .highlight { display: flex; gap: 10px; align-items: flex-start; color: #d4dce6; font-size: 14px; }
+    .check { color: var(--blue-light); font-size: 19px; line-height: 1.25; }
+    .stats-card { position: relative; padding: 31px; border-radius: 17px; border: 1px solid #1c2b3b; background: linear-gradient(145deg,#101823,#0a1018); box-shadow: 0 18px 55px #0005; }
+    .stats-card::before { content: ""; position: absolute; z-index: -1; inset: -18px; background: linear-gradient(110deg,#174577,#245e87); border-radius: 22px; opacity: .12; filter: blur(25px); }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .stat { border-bottom: 1px solid var(--line); padding-bottom: 17px; }
+    .stat:nth-child(n+3) { padding: 12px 0 0; border: 0; }
+    .stat-value { display: block; font-size: clamp(35px,4vw,51px); font-weight: 800; letter-spacing: -.07em; color: var(--white); line-height: 1.1; }
+    .stat-label { color: var(--gray); font-size: 13px; margin-top: 6px; }
+    .timeline { border-left: 1px solid #26374b; margin-left: 7px; padding-left: 30px; }
+    .timeline-item { position: relative; padding: 0 0 36px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ""; position: absolute; top: 6px; left: -36px; width: 11px; height: 11px; border-radius: 50%; background: var(--blue-light); box-shadow: 0 0 0 5px #17457735; }
+    .timeline-date { color: var(--blue-light); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .timeline-item h3 { font-size: 21px; margin: 6px 0 2px; }
+    .timeline-role { color: #d2dbe6; font-size: 14px; }
+    .timeline-item p { max-width: 800px; color: var(--gray); margin: 11px 0 0; }
+    .website-grid, .project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 19px; }
+    .website-card { display: grid; grid-template-columns: 105px 1fr; align-items: center; gap: 22px; min-height: 185px; padding: 24px; border-radius: 18px; border: 1px solid #202a37; background: linear-gradient(145deg,#111923,#0a1018); transition: transform .25s,border-color .25s,background .25s; }
+    .website-card:hover { transform: translateY(-5px); border-color: #285887; background: linear-gradient(145deg,#142233,#0b131d); }
+    .website-logo { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 15px; background: #fff; padding: 9px; }
+    .website-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .website-card h3 { margin: 0 0 7px; font-size: 20px; letter-spacing: -.03em; }
+    .website-card p { color: var(--gray); font-size: 14px; margin: 0 0 14px; }
+    .website-link { color: var(--blue-light); font-size: 13px; font-weight: 700; }
+    .project-card { min-height: 260px; position: relative; overflow: hidden; border: 1px solid #202a37; border-radius: 18px; background: linear-gradient(145deg,#111923,#090e15); padding: 28px; transition: transform .25s,border-color .25s; }
+    .project-card:hover { transform: translateY(-4px); border-color: #285887; }
+    .project-card::after { content: ""; position: absolute; width: 180px; height: 180px; top: -105px; right: -85px; border-radius: 50%; background: #17457724; filter: blur(4px); }
+    .project-index { color: var(--blue-light); font-size: 12px; letter-spacing: .18em; font-weight: 750; }
+    .project-card h3 { margin: 19px 0 9px; font-size: 22px; letter-spacing: -.04em; }
+    .project-card p { color: var(--gray); font-size: 14px; margin: 0 0 20px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { border: 1px solid #263a52; border-radius: 999px; padding: 4px 10px; color: #c7d6e8; background: #0b1420; font-size: 11px; }
+    .skills-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+    .skill-card { position: relative; overflow: hidden; padding: 23px; border: 1px solid #202a37; border-radius: 16px; background: #0d141e; transition: border-color .2s,transform .2s; }
+    .skill-card:hover { border-color: #285887; transform: translateY(-3px); }
+    .skill-card::after { content: ""; position: absolute; top: -50px; right: -50px; width: 120px; height: 120px; border-radius: 50%; background: #17457726; filter: blur(18px); }
+    .skill-number { display: inline-grid; place-items: center; width: 42px; height: 42px; margin-bottom: 19px; border-radius: 12px; background: #1745772c; border: 1px solid #24527f; color: var(--blue-light); font-size: 13px; font-weight: 800; }
+    .skill-card h3 { margin: 0 0 8px; font-size: 18px; }
+    .skill-card p { color: var(--gray); font-size: 13px; margin: 0; }
+    .cert-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+    .cert { border: 1px solid var(--line); background: #0b111a; color: #c5cfdb; border-radius: 8px; padding: 9px 12px; font-size: 12px; }
+    .contact-panel { position: relative; overflow: hidden; border: 1px solid #202a37; border-radius: 25px; background: linear-gradient(130deg,#101923,#090e15); padding: clamp(28px,6vw,68px); }
+    .contact-panel::before,.contact-panel::after { content: ""; pointer-events: none; position: absolute; width: 270px; height: 270px; border-radius: 50%; background: #17457727; filter: blur(65px); }
+    .contact-panel::before { top: -150px; right: -100px; }
+    .contact-panel::after { bottom: -190px; left: -90px; background: #225a941c; }
+    .contact-inner { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 35px; }
+    .contact-inner h2 { font-size: clamp(38px,6vw,65px); line-height: 1.05; letter-spacing: -.07em; margin: 11px 0 17px; }
+    .contact-inner h2 span { color: var(--blue-light); }
+    .contact-inner p { max-width: 590px; margin: 0; color: var(--gray); font-size: 16px; }
+    .contact-actions { display: flex; flex-direction: column; gap: 11px; min-width: 210px; }
+    .footer { display: flex; justify-content: space-between; gap: 20px; color: var(--gray-dark); padding: 23px 2px 0; font-size: 12px; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease,transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width:900px) {
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 11px; }
+      .hero-grid { gap: 40px; }
+      .about-grid { gap: 40px; }
+      .skills-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width:700px) {
+      html { scroll-padding-top: 68px; }
+      .container { width: min(100% - 34px, 560px); }
+      .topbar,.topbar.scrolled { padding: 13px 0; background: rgba(5,8,14,.94); border-color: var(--line); backdrop-filter: blur(14px); }
+      .menu-toggle { display: inline-flex; }
+      .nav-resume { margin-left: auto; }
+      .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; padding: 17px 24px 22px; background: #080d14; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 0; border-bottom: 1px solid #17212e; }
+      .hero { min-height: auto; padding: 112px 0 82px; }
+      .hero::before { width: 120%; right: -45%; opacity: .65; }
+      .hero-grid { grid-template-columns: 1fr; gap: 30px; padding-top: 0; }
+      .hero-copy { text-align: center; margin: auto; }
+      .hero h1 { font-size: clamp(54px,15vw,82px); }
+      .hero-description { font-size: 17px; margin: 0 auto; }
+      .hero-actions,.hero-socials { justify-content: center; }
+      .hero-mobile-portrait { display: block; width: 112px; height: 136px; margin: 0 auto 23px; object-fit: cover; object-position: center 34%; border-radius: 15px; border: 1px solid #285887; }
+      .portrait-wrap { display: none; }
+      .scroll-cue { display: none; }
+      .section { padding: 77px 0; }
+      .section-head { margin-bottom: 32px; }
+      .about-grid { grid-template-columns: 1fr; gap: 34px; }
+      .about-text p { font-size: 16px; }
+      .highlights { grid-template-columns: 1fr; }
+      .website-grid,.project-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .contact-inner { align-items: flex-start; flex-direction: column; }
+      .contact-actions { width: 100%; flex-direction: row; flex-wrap: wrap; }
+      .footer { flex-direction: column; gap: 4px; }
+    }
+    @media (max-width:430px) {
+      .container { width: min(100% - 26px, 560px); }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .button { width: 100%; }
+      .nav-resume { padding: 7px 11px; font-size: 11px; }
+      .website-card { grid-template-columns: 76px 1fr; gap: 15px; padding: 16px; }
+      .website-logo { width: 74px; height: 74px; }
+      .website-card h3 { font-size: 17px; }
+      .stats-card { padding: 22px; }
+      .stat-value { font-size: 35px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
-  <main class="page">
-    <article class="profile">
-      <header class="intro">
-        <div>
-          <h1>Hi <span class="wave" aria-label="waving hand">👋</span>! My name is Ali Akashi</h1>
-          <p class="lead">I’m a <strong>Data Analyst</strong> from Dubai, UAE, interested in turning data into practical insights with Python, SQL, machine learning, and visualization.</p>
-          <p class="location">🎓 Bachelor of Data Analytics · Ajman University · UAE Golden Visa holder</p>
+  <header class="topbar" id="topbar">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Ali Akashi home">AA<span>.</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">About</a><a href="#experience">Experience</a><a href="#websites">Websites</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      </div>
+      <a class="nav-resume" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid container">
+        <div class="hero-copy">
+          <img class="hero-mobile-portrait" src="profile.jpg" alt="Ali Akashi">
+          <div class="eyebrow">Data Analyst · Dubai, UAE</div>
+          <h1>Ali<br><span>Akashi</span></h1>
+          <p class="hero-description">I turn complex data into <strong>clear insights and useful tools</strong>, using Python, SQL, machine learning, NLP, and data visualization.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#websites">Explore my work <span aria-hidden="true">↗</span></a>
+            <a class="button outline" href="#contact">Let’s connect</a>
+            <a class="button outline" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">Download resume ↓</a>
+          </div>
+          <div class="hero-socials"><a href="mailto:ali.akashi101@gmail.com">Email</a><a href="https://www.linkedin.com/in/ali-akashi-5460a9352/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/aliakashi101-tech" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
         </div>
-        <img class="portrait" src="profile.jpg" alt="Portrait of Ali Akashi">
-      </header>
+        <div class="portrait-wrap" aria-label="Portrait of Ali Akashi"><div class="portrait-frame"></div><div class="portrait-image"><img src="profile.jpg" alt="Ali Akashi, data analyst"></div></div>
+      </div>
+      <a href="#about" class="scroll-cue" aria-label="Scroll to about section"></a>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="github-stats-title">
-        <h2 id="github-stats-title" style="text-align:center">GitHub at a glance</h2>
-        <div class="stats">
-          <img src="https://github-readme-stats.vercel.app/api?username=aliakashi101-tech&amp;show_icons=true&amp;hide_title=true&amp;hide_border=true&amp;theme=transparent&amp;bg_color=00000000&amp;title_color=6caeff&amp;text_color=d5dfec&amp;icon_color=6caeff" alt="GitHub profile statistics for aliakashi101-tech" loading="lazy">
-          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=aliakashi101-tech&amp;layout=compact&amp;langs_count=5&amp;hide_title=true&amp;hide_border=true&amp;theme=transparent&amp;bg_color=00000000&amp;title_color=6caeff&amp;text_color=d5dfec" alt="Most used public programming languages on aliakashi101-tech" loading="lazy">
+    <section class="section" id="about">
+      <div class="container about-grid reveal">
+        <div class="about-text">
+          <div class="section-kicker">About me</div>
+          <h2 class="section-head" style="font-size:clamp(34px,5vw,52px);line-height:1.13;letter-spacing:-.06em;margin:10px 0 22px">Curious about data.<br><span style="color:var(--blue-light)">Focused on outcomes.</span></h2>
+          <p>I’m an aspiring data analyst and Ajman University graduate with hands-on experience in e-commerce operations, machine learning for NLP, and dashboard development.</p>
+          <p>At Taif Tec, I worked on product management and content organization for the Dukany platform and built Python tools that translated system logs into performance metrics. I enjoy making complex information easier to act on.</p>
+          <div class="highlights"><div class="highlight"><span class="check">✓</span><span>UAE Golden Visa holder</span></div><div class="highlight"><span class="check">✓</span><span>Arabic native · English fluent</span></div><div class="highlight"><span class="check">✓</span><span>Bachelor of Data Analytics</span></div><div class="highlight"><span class="check">✓</span><span>Based in Dubai, UAE</span></div></div>
         </div>
-      </section>
+        <div class="stats-card"><div class="stats-grid"><div class="stat"><span class="stat-value">95%</span><div class="stat-label">Sentiment model accuracy</div></div><div class="stat"><span class="stat-value">5 mo.</span><div class="stat-label">IT internship at Taif Tec</div></div><div class="stat"><span class="stat-value">2025</span><div class="stat-label">Data Analytics graduate</div></div><div class="stat"><span class="stat-value">2</span><div class="stat-label">Featured web projects</div></div></div></div>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="about-title">
-        <div class="section-label">About</div>
-        <h2 id="about-title">Data analytics, with a practical edge</h2>
-        <p class="about">I’m an aspiring data analyst with hands-on experience supporting e-commerce operations and building Python log-analysis tools. At Taif Tec, I worked on product management and content organization for the Dukany platform, turning system logs into performance metrics. My academic work includes a customer-review sentiment model and an interactive Tableau dashboard. I’m interested in clear analysis that helps people make better decisions.</p>
-      </section>
+    <section class="section alt" id="experience">
+      <div class="container reveal">
+        <div class="section-head"><div class="section-kicker">Experience</div><h2>Learning by <span>building.</span></h2><p>Applying data and technology to real operational work.</p></div>
+        <div class="timeline"><article class="timeline-item"><div class="timeline-date">May 2025 — September 2025 · Dubai, UAE</div><h3>Taif Tec</h3><div class="timeline-role">Information Technology Intern · Dukany e-commerce platform</div><p>Managed product listings and content organization to improve catalog accuracy. Built Python log-analysis tools that turned raw system data into performance metrics and helped optimize internal workflows. Collaborated across IT and product operations.</p></article></div>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="skills-title">
-        <div class="section-label">Tools I work with</div>
-        <h2 id="skills-title">Skills &amp; technologies</h2>
-        <div class="skills">
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" loading="lazy">Python</span>
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="" loading="lazy">SQL</span>
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="" loading="lazy">TensorFlow</span>
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tableau/tableau-original.svg" alt="" loading="lazy">Tableau</span>
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachespark/apachespark-original.svg" alt="" loading="lazy">Spark</span>
-          <span class="skill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hadoop/hadoop-original.svg" alt="" loading="lazy">Hadoop</span>
-          <span class="chip">NLP</span><span class="chip">Data visualization</span><span class="chip">Log analysis</span><span class="chip">E-commerce operations</span>
+    <section class="section" id="websites">
+      <div class="container reveal">
+        <div class="section-head center"><div class="section-kicker">Selected website work</div><h2>Digital experiences <span>in the wild.</span></h2><p>A couple of websites I’ve worked on. Open each to explore the live experience.</p></div>
+        <div class="website-grid">
+          <article class="website-card"><div class="website-logo"><img src="al-rawda-logo.png" alt="Al Rawda Dental Clinic logo" loading="lazy"></div><div><h3>Al Rawda Dental Clinic</h3><p>Clinic website</p><a class="website-link" href="https://al-rawda-dental-clinic.vercel.app/" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>
+          <article class="website-card"><div class="website-logo"><img src="billionairecardz-icon.png" alt="Billionaire Cardz logo" loading="lazy"></div><div><h3>Billionaire Cardz</h3><p>Trading card website</p><a class="website-link" href="https://billionairecardz.com/" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="websites-title">
-        <div class="section-label">Selected website work</div>
-        <h2 id="websites-title">Websites I’ve worked on</h2>
-        <div class="work-grid">
-          <article class="work-card">
-            <h3>Al Rawda Dental Clinic</h3>
-            <p>Dental clinic website</p>
-            <a class="visit" href="https://al-rawda-dental-clinic.vercel.app/" target="_blank" rel="noopener noreferrer">Visit website ↗</a>
-          </article>
-          <article class="work-card">
-            <h3>Billionaire Cardz</h3>
-            <p>Trading card website</p>
-            <a class="visit" href="https://billionairecardz.com/" target="_blank" rel="noopener noreferrer">Visit website ↗</a>
-          </article>
+    <section class="section alt" id="projects">
+      <div class="container reveal">
+        <div class="section-head"><div class="section-kicker">University projects</div><h2>Turning questions into <span>insights.</span></h2><p>Applied analytics projects completed at Ajman University.</p></div>
+        <div class="project-grid">
+          <article class="project-card"><div class="project-index">PROJECT 01</div><h3>Customer Review Sentiment Analysis</h3><p>Developed a deep-learning model to classify customer reviews. Used Python, TensorFlow, and NLP libraries for text preprocessing and model building. Achieved 95% accuracy, evaluated with precision, recall, and F1 score.</p><div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">NLP</span><span class="tag">95% accuracy</span></div></article>
+          <article class="project-card"><div class="project-index">PROJECT 02</div><h3>Interactive Data Visualization</h3><p>Built a Tableau dashboard with dynamic charts and interactive filters to help explore complex datasets, surface trends, and communicate actionable insights.</p><div class="tags"><span class="tag">Tableau</span><span class="tag">Dashboards</span><span class="tag">Data storytelling</span></div></article>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="projects-title">
-        <div class="section-label">Academic &amp; applied work</div>
-        <h2 id="projects-title">Selected projects</h2>
-        <div class="projects">
-          <article class="project">
-            <h3>Customer Review Sentiment Analysis</h3>
-            <p>Built a deep-learning model for customer reviews, from text preprocessing to evaluation. Achieved 95% sentiment-prediction accuracy, measured with precision, recall, and F1 score.</p>
-            <div class="chips"><span class="chip">Python</span><span class="chip">TensorFlow</span><span class="chip">NLP</span><span class="chip">95% accuracy</span></div>
-          </article>
-          <article class="project">
-            <h3>Interactive Data Visualization</h3>
-            <p>Created a Tableau dashboard with dynamic charts and interactive filters to help people explore complex data and spot key trends.</p>
-            <div class="chips"><span class="chip">Tableau</span><span class="chip">Dashboard design</span><span class="chip">Data storytelling</span></div>
-          </article>
+    <section class="section" id="skills">
+      <div class="container reveal">
+        <div class="section-head center"><div class="section-kicker">Skills &amp; learning</div><h2>Tools for thoughtful <span>analysis.</span></h2><p>Technical strengths and continuing education from my resume and LinkedIn profile.</p></div>
+        <div class="skills-grid">
+          <article class="skill-card"><span class="skill-number">01</span><h3>Data analysis</h3><p>Python, SQL, statistical modeling, data management, and log analysis.</p></article>
+          <article class="skill-card"><span class="skill-number">02</span><h3>Machine learning &amp; NLP</h3><p>Text preprocessing, deep learning, model evaluation, TensorFlow, and Keras.</p></article>
+          <article class="skill-card"><span class="skill-number">03</span><h3>Visualization</h3><p>Tableau dashboards, interactive charts, and data storytelling.</p></article>
         </div>
-      </section>
+        <div class="cert-list"><span class="cert">Advanced Relational Database and SQL</span><span class="cert">Deep Learning &amp; Neural Networks with Keras</span><span class="cert">Real-Time Analytics with Spark</span><span class="cert">Databases and SQL for Data Science with Python</span><span class="cert">Big Data Processing Using Hadoop</span></div>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-      <section aria-labelledby="experience-title">
-        <div class="section-label">Experience</div>
-        <h2 id="experience-title">Where I’ve contributed</h2>
-        <div class="experience">
-          <div class="date">MAY — SEP 2025<br>Dubai, UAE</div>
-          <div><h3>Taif Tec · Information Technology Intern</h3><p>Supported product listings and content organization on the Dukany e-commerce platform. Built Python log-analysis tools to turn system data into performance metrics and support internal workflow improvements.</p></div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section aria-labelledby="education-title">
-        <div class="section-label">Education &amp; learning</div>
-        <h2 id="education-title">Always learning</h2>
-        <p class="education"><strong>Ajman University</strong> · Bachelor of Data Analytics · 2021–2025<br><strong>Certifications:</strong> Deep Learning &amp; Neural Networks with Keras · Advanced Relational Database and SQL · Real-Time Analytics with Spark · Databases and SQL for Data Science with Python (Honors) · Big Data Processing with Hadoop</p>
-      </section>
-
-      <div class="divider"></div>
-      <footer>
-        <div class="section-label">Connect with me</div>
-        <div class="badges">
-          <a class="badge" href="mailto:ali.akashi101@gmail.com">✉ EMAIL</a>
-          <a class="badge" href="https://www.linkedin.com/in/ali-akashi-5460a9352/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
-          <a class="badge" href="https://github.com/aliakashi101-tech" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
-          <a class="badge" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">RESUME ↓</a>
-        </div>
-      </footer>
-    </article>
-    <div class="foot">© <span id="year">2026</span> Ali Akashi · Dubai, UAE</div>
+    <section class="section alt" id="contact">
+      <div class="container reveal"><div class="contact-panel"><div class="contact-inner"><div><div class="section-kicker">Get in touch</div><h2>Let’s turn data<br>into <span>something useful.</span></h2><p>Interested in analytics, machine learning, or a project that could use a data-minded approach? I’d be glad to connect.</p></div><div class="contact-actions"><a class="button primary" href="mailto:ali.akashi101@gmail.com">Email Ali ↗</a><a class="button outline" href="https://www.linkedin.com/in/ali-akashi-5460a9352/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn ↗</a><a class="button outline" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">View resume ↗</a></div></div></div><footer class="footer"><span>© <span id="year">2026</span> Ali Akashi</span><span>Dubai, United Arab Emirates</span></footer></div>
+    </section>
   </main>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    const topbar = document.getElementById('topbar');
+    const toggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    window.addEventListener('scroll', () => topbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      toggle.textContent = open ? '×' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      toggle.textContent = '☰';
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      }), { threshold: .12 });
+      document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
+    } else document.querySelectorAll('.reveal').forEach(section => section.classList.add('visible'));
+  </script>
 </body>
 </html>
