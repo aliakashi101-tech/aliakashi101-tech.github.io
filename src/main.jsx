@@ -92,7 +92,8 @@ function PublicProjects() {
       const db = getFirestore();
       const projectsQuery = query(collection(db, 'projects'), where('hidden', '==', false), orderBy('view_order', 'asc'));
       unsubscribe = onSnapshot(projectsQuery, (snapshot) => {
-        setProjects(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })));
+        const publishedProjects = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+        setProjects(publishedProjects.length ? publishedProjects : starterProjects);
         setStatus('ready');
       }, (error) => { console.error('Unable to load projects', error); setStatus('error'); });
     }).catch((error) => { console.error('Unable to initialize Firebase', error); setStatus('error'); });
