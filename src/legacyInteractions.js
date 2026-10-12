@@ -31,7 +31,7 @@ const topbar = document.getElementById('topbar');
       'Advanced Relational Database and SQL':'قواعد البيانات العلائقية المتقدمة وSQL','Deep Learning & Neural Networks with Keras':'التعلّم العميق والشبكات العصبية باستخدام Keras','Real-Time Analytics with Spark':'التحليلات الفورية باستخدام Spark','Databases and SQL for Data Science with Python':'قواعد البيانات وSQL لعلوم البيانات باستخدام Python','Big Data Processing Using Hadoop':'معالجة البيانات الضخمة باستخدام Hadoop',
       'Get in touch':'تواصل معي','Let’s turn data':'لنحوّل البيانات','into':'إلى','something useful.':'نتائج مفيدة.','Interested in analytics, machine learning, or a project that could use a data-minded approach? I’d be glad to connect.':'هل لديك اهتمام بتحليلات البيانات أو تعلّم الآلة أو مشروع يستفيد من التفكير التحليلي؟ يسعدني التواصل معك.',
       'Phone:':'الهاتف:','Email Ali ↗':'راسل علي ↗','WhatsApp ↗':'واتساب ↗','Telegram ↗':'تيليجرام ↗','Call +971 50 872 6975':'اتصل على +971 50 872 6975','Connect on LinkedIn ↗':'تواصل عبر LinkedIn ↗','View GitHub ↗':'عرض GitHub ↗','View resume ↗':'عرض السيرة الذاتية ↗','Dubai, United Arab Emirates':'دبي، الإمارات العربية المتحدة',
-      'Email':'البريد الإلكتروني','Phone':'الهاتف','WhatsApp':'واتساب','Telegram':'تيليجرام','Admin':'الإدارة'
+      'Email':'البريد الإلكتروني','Phone':'الهاتف','WhatsApp':'واتساب','Telegram':'تيليجرام'
     };
     const textNodes = [];
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -87,6 +87,17 @@ const topbar = document.getElementById('topbar');
       setLanguage(nextLanguage);
       try { localStorage.setItem('portfolio-language', nextLanguage); } catch (_) {}
     });
+    const copyrightTrigger = document.getElementById('copyright-admin-trigger');
+    const openAdminOnCopyrightSelection = () => {
+      if (!copyrightTrigger || document.body.classList.contains('admin-mode')) return;
+      const selection = window.getSelection();
+      if (selection?.toString().replace(/\s+/g, ' ').trim() === copyrightTrigger.textContent.replace(/\s+/g, ' ').trim()) {
+        window.location.hash = '/admin';
+        selection.removeAllRanges();
+      }
+    };
+    document.addEventListener('mouseup', openAdminOnCopyrightSelection);
+    document.addEventListener('keyup', openAdminOnCopyrightSelection);
     document.getElementById('year').textContent = new Date().getFullYear();
     let savedLanguage = 'en';
     try { savedLanguage = localStorage.getItem('portfolio-language') === 'ar' ? 'ar' : 'en'; } catch (_) {}
