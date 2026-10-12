@@ -109,11 +109,11 @@
     .website-card { display: grid; grid-template-columns: 105px 1fr; align-items: center; gap: 22px; min-height: 185px; padding: 24px; border-radius: 18px; border: 1px solid #202a37; background: linear-gradient(145deg,#111923,#0a1018); transition: transform .25s,border-color .25s,background .25s; }
     .website-card:hover { transform: translateY(-5px); border-color: #285887; background: linear-gradient(145deg,#142233,#0b131d); }
     .website-logo { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 15px; background: #fff; padding: 9px; }
+    .website-logo.billionaire-logo { background: #08090b; padding: 5px; }
     .website-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
     .website-card h3 { margin: 0 0 7px; font-size: 20px; letter-spacing: -.03em; }
     .website-card p { color: var(--gray); font-size: 14px; margin: 0 0 14px; }
     .website-link { color: var(--blue-light); font-size: 13px; font-weight: 700; }
-    .website-feature-image { display: block; width: min(100%, 170px); aspect-ratio: 1; object-fit: cover; border: 1px solid #263a52; border-radius: 12px; margin: 0 0 14px; }
     .project-card { min-height: 260px; position: relative; overflow: hidden; border: 1px solid #202a37; border-radius: 18px; background: linear-gradient(145deg,#111923,#090e15); padding: 28px; transition: transform .25s,border-color .25s; }
     .project-card:hover { transform: translateY(-4px); border-color: #285887; }
     .project-card::after { content: ""; position: absolute; width: 180px; height: 180px; top: -105px; right: -85px; border-radius: 50%; background: #17457724; filter: blur(4px); }
@@ -194,7 +194,6 @@
       .website-card { grid-template-columns: 76px 1fr; gap: 15px; padding: 16px; }
       .website-logo { width: 74px; height: 74px; }
       .website-card h3 { font-size: 17px; }
-      .website-feature-image { width: min(100%, 132px); }
       .stats-card { padding: 22px; }
       .stat-value { font-size: 35px; }
     }
@@ -270,7 +269,7 @@
         <div class="section-head center"><div class="section-kicker">Selected website work</div><h2>Digital experiences <span>in the wild.</span></h2><p>A couple of websites I’ve worked on. Open each to explore the live experience.</p></div>
         <div class="website-grid">
           <article class="website-card"><div class="website-logo"><img src="al-rawda-logo.png" alt="Al Rawda Dental Clinic logo" loading="lazy"></div><div><h3>Al Rawda Dental Clinic</h3><p>Clinic website</p><a class="website-link" href="https://al-rawda-dental-clinic.vercel.app/" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>
-          <article class="website-card"><div class="website-logo"><img src="billionairecardz-icon.png" alt="Billionaire Cardz logo" loading="lazy"></div><div class="website-details"><img class="website-feature-image" src="billionairecardz-project.jpg" alt="Billionaire Cardz featured project image" loading="lazy"><h3>Billionaire Cardz</h3><p>Trading card website</p><a class="website-link" href="https://billionairecardz.com/" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>
+          <article class="website-card"><div class="website-logo billionaire-logo"><img src="billionairecardz-project.jpg" alt="Billionaire Cardz logo" loading="lazy"></div><div><h3>Billionaire Cardz</h3><p>Trading card website</p><a class="website-link" href="https://billionairecardz.com/" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>
         </div>
       </div>
     </section>
@@ -313,7 +312,7 @@
       'clear insights and useful tools':'رؤى واضحة وأدوات عملية',
       ', using Python, SQL, machine learning, NLP, and data visualization.':'، باستخدام Python وSQL وتعلّم الآلة ومعالجة اللغة الطبيعية وتصوير البيانات.',
       'Explore my work':'استكشف أعمالي','Let’s connect':'لنتواصل','Download resume ↓':'تنزيل السيرة الذاتية ↓',
-      'About me':'نبذة عني','Curious about data.':'شغوف بالبيانات.','Focused on outcomes.':'أركّز على النتائج.',
+      'View Resume':'\u0639\u0631\u0636 \u0627\u0644\u0633\u064a\u0631\u0629 \u0627\u0644\u0630\u0627\u062a\u064a\u0629','About me':'نبذة عني','Curious about data.':'شغوف بالبيانات.','Focused on outcomes.':'أركّز على النتائج.',
       'I’m an aspiring data analyst and Ajman University graduate with hands-on experience in e-commerce operations, machine learning for NLP, and dashboard development.':'أنا محلل بيانات طموح وخريج جامعة عجمان، ولدي خبرة عملية في عمليات التجارة الإلكترونية وتعلّم الآلة لمعالجة اللغة الطبيعية وتطوير لوحات المعلومات.',
       'At Taif Tec, I worked on product management and content organization for the Dukany platform and built Python tools that translated system logs into performance metrics. I enjoy making complex information easier to act on.':'عملت في Taif Tec على إدارة المنتجات وتنظيم المحتوى لمنصة Dukany، وطوّرت أدوات باستخدام Python لتحويل سجلات النظام إلى مؤشرات أداء. أستمتع بتبسيط المعلومات المعقدة وتحويلها إلى خطوات عملية.',
       'UAE Golden Visa holder':'حامل الإقامة الذهبية لدولة الإمارات','Arabic native · English fluent':'العربية: اللغة الأم · الإنجليزية: بطلاقة','Bachelor of Data Analytics':'بكالوريوس تحليلات البيانات','Based in Dubai, UAE':'أقيم في دبي، الإمارات العربية المتحدة',
