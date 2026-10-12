@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d16">
+  <meta name="description" content="Ali Akashi — Data Analyst working across Python, SQL, machine learning, NLP, and data visualization in Dubai, UAE.">
+  <title>Ali Akashi — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #080d16;
+      --panel: #0d1522;
+      --panel-light: #111d2d;
+      --white: #f4f7fb;
+      --muted: #a2afc1;
+      --blue: #3d9bff;
+      --blue-light: #8bc5ff;
+      --line: rgba(185, 207, 235, .15);
+      --mono: "DM Mono", monospace;
+      --sans: "Manrope", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body { margin: 0; background: var(--ink); color: var(--white); font: 16px/1.7 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+    .topbar { position: sticky; z-index: 10; top: 0; background: rgba(8,13,22,.88); border-bottom: 1px solid var(--line); backdrop-filter: blur(16px); }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { font-weight: 800; letter-spacing: -.06em; font-size: 20px; }
+    .brand span { color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 13px; }
+    .nav-links a:hover, .text-link:hover { color: var(--blue-light); }
+    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--blue); color: var(--white); padding: 11px 17px; border-radius: 5px; font-size: 13px; font-weight: 700; transition: .2s ease; }
+    .nav-cta:hover, .button:hover { background: var(--blue); color: #06101d; transform: translateY(-2px); }
+    .hero { min-height: 650px; display: grid; align-items: center; position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+    .hero::before { content: ""; position: absolute; width: 600px; height: 600px; right: -70px; top: -65px; border-radius: 50%; background: radial-gradient(circle, rgba(30,115,210,.2), rgba(8,13,22,0) 68%); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); align-items: center; gap: 64px; padding-block: 86px; position: relative; }
+    .eyebrow, .section-kicker { font: 12px var(--mono); color: var(--blue-light); letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow { display: flex; align-items: center; gap: 11px; }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--blue); }
+    h1 { font-size: clamp(52px, 7vw, 84px); line-height: .99; letter-spacing: -.075em; margin: 24px 0 22px; }
+    h1 span { display: block; color: var(--blue); }
+    .hero-copy { max-width: 590px; color: var(--muted); font-size: 17px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .button.primary { background: var(--blue); color: #06101d; }
+    .button.primary:hover { background: var(--blue-light); border-color: var(--blue-light); }
+    .button.subtle { border-color: var(--line); color: var(--muted); }
+    .hero-card { background: linear-gradient(145deg, rgba(17,29,45,.92), rgba(9,16,27,.86)); border: 1px solid var(--line); border-radius: 10px; padding: 28px; box-shadow: 0 24px 80px rgba(0,0,0,.24); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .card-label { color: var(--muted); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+    .status { width: 8px; height: 8px; background: #64d6a1; border-radius: 50%; box-shadow: 0 0 16px #64d6a1; }
+    .hero-card h2 { font-size: 22px; letter-spacing: -.04em; margin: 22px 0 6px; }
+    .hero-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .quick-facts { display: grid; gap: 0; margin-top: 24px; }
+    .fact { display: flex; justify-content: space-between; gap: 18px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 13px; }
+    .fact span:first-child { color: var(--muted); }
+    .fact span:last-child { text-align: right; }
+    section { padding-block: 104px; border-bottom: 1px solid var(--line); }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-bottom: 48px; }
+    .section-heading h2 { font-size: clamp(34px, 4vw, 49px); line-height: 1.1; letter-spacing: -.065em; margin: 10px 0 0; }
+    .section-heading p { max-width: 390px; color: var(--muted); margin: 0; }
+    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; }
+    .about-note { border-left: 2px solid var(--blue); padding: 4px 0 4px 24px; color: var(--muted); }
+    .about-note strong { color: var(--white); }
+    .about-copy p { color: var(--muted); margin: 0 0 18px; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+    .tag { border: 1px solid var(--line); background: rgba(255,255,255,.025); border-radius: 3px; padding: 6px 10px; color: #d8e3f0; font: 11px var(--mono); }
+    .experience-card { display: grid; grid-template-columns: 190px 1fr; gap: 38px; padding: 30px 0; border-top: 1px solid var(--line); }
+    .experience-card:last-child { border-bottom: 1px solid var(--line); }
+    .date { color: var(--blue-light); font: 12px var(--mono); }
+    .experience-card h3, .project h3 { margin: 0 0 4px; font-size: 21px; letter-spacing: -.04em; }
+    .role { color: var(--muted); font-size: 14px; margin-bottom: 15px; }
+    .experience-card ul { color: var(--muted); padding-left: 19px; margin: 0; }
+    .experience-card li { padding: 3px 0 3px 4px; }
+    .projects { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .project { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 7px; padding: 28px; min-height: 255px; transition: .2s ease; }
+    .project:hover { border-color: rgba(61,155,255,.65); transform: translateY(-3px); }
+    .project-number { color: var(--blue); font: 12px var(--mono); margin-bottom: 32px; }
+    .project p { color: var(--muted); font-size: 14px; margin: 12px 0 22px; }
+    .project .tag-list { margin-top: 0; }
+    .project-wide { grid-column: 1 / -1; min-height: 220px; }
+    .project-wide .project-number { margin-bottom: 24px; }
+    .education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+    .education-card { padding: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+    .education-card h3 { margin: 10px 0 4px; font-size: 18px; }
+    .education-card p { color: var(--muted); font-size: 14px; margin: 0; }
+    .certs { display: grid; gap: 0; }
+    .cert { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 18px; font-size: 13px; }
+    .cert span:last-child { color: var(--muted); font: 11px var(--mono); white-space: nowrap; }
+    .contact { background: linear-gradient(120deg, rgba(24,90,156,.2), rgba(8,13,22,0) 60%); }
+    .contact-panel { display: flex; justify-content: space-between; align-items: center; gap: 36px; }
+    .contact h2 { font-size: clamp(36px, 5vw, 58px); letter-spacing: -.07em; line-height: 1.06; margin: 10px 0 14px; }
+    .contact p { color: var(--muted); margin: 0; }
+    .contact-links { display: grid; gap: 12px; min-width: 260px; }
+    .text-link { color: var(--blue-light); font-size: 14px; }
+    footer { padding: 24px 0; color: var(--muted); font: 11px var(--mono); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 18px; }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 600px); }
+      .nav { min-height: 66px; }
+      .nav-links { gap: 16px; }
+      .nav-links a:nth-child(2), .nav-links a:nth-child(3) { display: none; }
+      .nav-cta { padding: 9px 12px; }
+      .hero { min-height: 0; }
+      .hero-grid, .about-grid, .education-grid { grid-template-columns: 1fr; gap: 34px; }
+      .hero-grid { padding-block: 74px; }
+      .hero-card { max-width: 440px; }
+      section { padding-block: 76px; }
+      .section-heading { display: block; margin-bottom: 32px; }
+      .section-heading p { margin-top: 15px; }
+      .experience-card { grid-template-columns: 1fr; gap: 12px; }
+      .projects { grid-template-columns: 1fr; }
+      .project-wide { grid-column: auto; }
+      .contact-panel { display: block; }
+      .contact-links { margin-top: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Ali Akashi home">AA<span>.</span></a>
+      <div class="nav-links">
+        <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#education">Education</a>
+      </div>
+      <a class="nav-cta" href="#contact">Let's connect <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid wrap">
+        <div>
+          <div class="eyebrow">Data analyst · Dubai, UAE</div>
+          <h1>Ali Akashi<span>Data, made useful.</span></h1>
+          <p class="hero-copy">I turn complex data into clear insights and practical tools. My work spans Python, SQL, machine learning, NLP, and interactive dashboards.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore my work <span aria-hidden="true">↘</span></a>
+            <a class="button subtle" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Profile summary">
+          <div class="card-top"><span class="card-label">Profile / 01</span><span class="status" title="Based in Dubai"></span></div>
+          <h2>Analytics with a practical edge.</h2>
+          <p>Data analytics graduate with hands-on experience in digital commerce operations and applied machine learning.</p>
+          <div class="quick-facts">
+            <div class="fact"><span>Focus</span><span>Analytics · NLP · BI</span></div>
+            <div class="fact"><span>Toolkit</span><span>Python · SQL · Tableau</span></div>
+            <div class="fact"><span>Based in</span><span>Dubai, United Arab Emirates</span></div>
+            <div class="fact"><span>Visa</span><span>UAE Golden Visa holder</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-heading"><div><div class="section-kicker">01 / About</div><h2>Curious by nature.<br>Analytical by design.</h2></div><p>Connecting data, technology, and day-to-day decisions.</p></div>
+        <div class="about-grid">
+          <div class="about-note"><strong>I’m an aspiring data analyst</strong> with hands-on experience in e-commerce platform operations, machine learning for NLP, and dashboard development. I enjoy finding the signal in complex information and making the result useful to people.</div>
+          <div class="about-copy"><p>At Taif Tec, I worked across product content and technical operations for the Dukany e-commerce platform. I also built Python log-analysis tools that translated system data into performance metrics and helped improve internal workflows.</p><p>My university projects gave me experience taking analytics work from data preparation through modelling and communication, including a customer-review sentiment model and an interactive Tableau dashboard.</p>
+            <div class="tag-list"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Machine Learning</span><span class="tag">NLP</span><span class="tag">Tableau</span><span class="tag">Data Storytelling</span><span class="tag">E-commerce</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="section-heading"><div><div class="section-kicker">02 / Experience</div><h2>Work that moves<br>from data to action.</h2></div><p>Technical problem solving grounded in real operational needs.</p></div>
+        <article class="experience-card">
+          <div class="date">MAY — SEP 2025<br>Dubai, UAE</div>
+          <div><h3>Taif Tec</h3><div class="role">Information Technology Intern · Dukany e-commerce platform</div>
+            <ul><li>Managed product listings and content organization, improving catalog accuracy and consistency.</li><li>Built Python-based log analysis tools to turn raw system data into performance metrics and help optimize workflows.</li><li>Worked across technical development and digital commerce operations with IT and product teams.</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-heading"><div><div class="section-kicker">03 / Selected projects</div><h2>Questions worth<br>answering with data.</h2></div><p>Academic projects built around applied machine learning and clear communication.</p></div>
+        <div class="projects">
+          <article class="project"><div class="project-number">PROJECT / 01</div><h3>Customer Review Sentiment Analysis</h3><p>Developed a deep-learning model to classify customer reviews. Preprocessed text and built the model with Python, TensorFlow, and NLP libraries; evaluated results using precision, recall, and F1 score.</p><div class="tag-list"><span class="tag">95% accuracy</span><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">NLP</span></div></article>
+          <article class="project"><div class="project-number">PROJECT / 02</div><h3>Interactive Data Visualization</h3><p>Built a Tableau dashboard to explore complex datasets, surface key trends, and support user-led exploration with dynamic charts and interactive filters.</p><div class="tag-list"><span class="tag">Tableau</span><span class="tag">Dashboard design</span><span class="tag">Data storytelling</span></div></article>
+          <article class="project project-wide"><div class="project-number">WORK / 03 · TAIF TEC</div><h3>E-commerce Operations &amp; Log Analysis</h3><p>Supported the Dukany product catalog and created Python log-analysis tools to convert system activity into practical performance metrics for internal workflow optimization.</p><div class="tag-list"><span class="tag">Python</span><span class="tag">Log analysis</span><span class="tag">E-commerce</span><span class="tag">Operations</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="wrap">
+        <div class="section-heading"><div><div class="section-kicker">04 / Education &amp; learning</div><h2>A strong foundation.<br>A habit of learning.</h2></div></div>
+        <div class="education-grid">
+          <div><div class="education-card"><div class="section-kicker">2021 — 2025 · Ajman, UAE</div><h3>Ajman University</h3><p>Bachelor of Data Analytics</p></div><div class="education-card" style="margin-top:14px"><div class="section-kicker">Languages</div><h3>Arabic &amp; English</h3><p>Arabic — Native · English — Fluent</p></div></div>
+          <div class="certs" aria-label="Certifications listed across my resume and LinkedIn profile">
+            <div class="cert"><span>Advanced Relational Database and SQL</span><span>2024–25</span></div>
+            <div class="cert"><span>Introduction to Deep Learning &amp; Neural Networks with Keras</span><span>2024–25</span></div>
+            <div class="cert"><span>Real-Time Analytics with Spark: User Activity Monitoring</span><span>2024–25</span></div>
+            <div class="cert"><span>Databases and SQL for Data Science with Python (Honors)</span><span>LinkedIn</span></div>
+            <div class="cert"><span>Big Data Processing Using Hadoop</span><span>LinkedIn</span></div>
+            <div class="cert"><span>Big Data and Hadoop Foundations and Setup</span><span>LinkedIn</span></div>
+            <div class="cert"><span>Foundations of Coding Full-Stack</span><span>LinkedIn</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact-panel">
+        <div><div class="section-kicker">05 / Contact</div><h2>Let’s make data<br>work for people.</h2><p>Open to connecting about data analytics, machine learning, and meaningful projects.</p></div>
+        <div class="contact-links"><a class="text-link" href="mailto:ali.akashi101@gmail.com">ali.akashi101@gmail.com ↗</a><a class="text-link" href="https://www.linkedin.com/in/ali-akashi-5460a9352/" target="_blank" rel="noopener">LinkedIn profile ↗</a><a class="text-link" href="Ali%20Akashi%20Resume.pdf" target="_blank" rel="noopener">View my resume ↗</a></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap"><span>© <span id="year">2026</span> Ali Akashi</span><span>Built with clarity in mind.</span></div></footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
