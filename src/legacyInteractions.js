@@ -23,7 +23,7 @@ const topbar = document.getElementById('topbar');
     });
     const translations = {
       'About':'نبذة عني','Experience':'الخبرة','Websites':'المواقع','Projects':'المشاريع','Skills':'المهارات','Contact':'تواصل','Resume ↗':'السيرة الذاتية ↗',
-      'Data Analyst · Dubai, UAE':'محلل بيانات · دبي، الإمارات العربية المتحدة',
+      'Hi, I am':'مرحباً، أنا',
       'I turn complex data into':'أحوّل البيانات المعقدة إلى',
       'clear insights and useful tools':'رؤى واضحة وأدوات عملية',
       ', using Python, SQL, machine learning, NLP, and data visualization.':'، باستخدام Python وSQL وتعلّم الآلة ومعالجة اللغة الطبيعية وتصوير البيانات.',

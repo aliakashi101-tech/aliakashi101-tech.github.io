@@ -13,7 +13,7 @@ export const translations = {
       { label: 'Skills', href: '#skills' }, { label: 'Contact', href: '#contact' },
     ], toggleLabel: 'العربية', toggleAria: 'Switch to Arabic' },
     hero: {
-      greeting: 'Data Analyst · Dubai, UAE', name: { first: 'Ali', last: 'Akashi' },
+      greeting: 'Hi, I am', name: { first: 'Ali', last: 'Akashi' },
       description: 'I turn complex data into clear insights and useful tools, using Python, SQL, machine learning, NLP, and data visualization.',
       specialties: [], connector: 'and', extra: '',
       primaryCta: 'Explore my work', secondaryCta: 'Let’s connect', resumeButton: 'View Resume',
@@ -58,7 +58,7 @@ export const translations = {
       { label: 'المهارات', href: '#skills' }, { label: 'تواصل', href: '#contact' },
     ], toggleLabel: 'English', toggleAria: 'التبديل إلى الإنجليزية' },
     hero: {
-      greeting: 'محلل بيانات · دبي، الإمارات', name: { first: 'علي', last: 'أكاشي' },
+      greeting: 'مرحباً، أنا', name: { first: 'علي', last: 'أكاشي' },
       description: 'أحوّل البيانات المعقدة إلى رؤى واضحة وأدوات عملية باستخدام Python وSQL وتعلّم الآلة ومعالجة اللغة الطبيعية وتصوير البيانات.',
       specialties: [], connector: 'و', extra: '',
       primaryCta: 'استكشف أعمالي', secondaryCta: 'لنتواصل', resumeButton: 'عرض السيرة الذاتية',
