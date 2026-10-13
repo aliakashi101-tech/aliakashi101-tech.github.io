@@ -142,6 +142,11 @@
     .contact-inner h2 span { color: var(--blue-light); }
     .contact-inner p { max-width: 590px; margin: 0; color: var(--gray); font-size: 16px; }
     .contact-actions { display: flex; flex-direction: column; gap: 11px; min-width: 210px; }
+    .contact-actions .button { width: 100%; min-height: 56px; border-width: 1px; border-radius: 14px; }
+    .contact-actions .button.primary { border-color: #285887; }
+    .contact-actions .button.outline { border-color: #263a52; background: rgba(5,8,14,.42); }
+    .contact-actions .button.outline:hover { border-color: #4c85bc; background: #17457720; }
+    .contact-actions .button:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; }
     .footer { display: flex; justify-content: space-between; gap: 20px; color: var(--gray-dark); padding: 23px 2px 0; font-size: 12px; }
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease,transform .65s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
