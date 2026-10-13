@@ -34,6 +34,17 @@ const emptyWebsite = (id: string): Website => ({
   url: "", image: "", image_theme: "light", view_order: 1, hidden: false,
 });
 
+function repairKnownWebsiteArabic(website: Website): Website {
+  const starter = starterWebsites.find((item) => item.id === website.id || item.name_en === website.name_en);
+  if (!starter) return website;
+  const isMissingOrCorrupt = (value: string) => !value || value.includes("?");
+  return {
+    ...website,
+    name_ar: isMissingOrCorrupt(website.name_ar) ? starter.name_ar : website.name_ar,
+    description_ar: isMissingOrCorrupt(website.description_ar) ? starter.description_ar : website.description_ar,
+  };
+}
+
 function Field({ label, value, onChange, dir = "ltr", type = "text" }: { label: string; value: string | number; onChange: (value: string) => void; dir?: "ltr" | "rtl"; type?: string }) {
   return <label className="flex min-w-0 flex-col gap-2 text-sm text-zinc-300"><span>{label}</span><input type={type} dir={dir} value={value ?? ""} onChange={(event) => onChange(event.target.value)} className="min-h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2.5 text-white outline-none focus:border-cyan-400" /></label>;
 }
@@ -51,7 +62,7 @@ export function WebsitesAdmin({ onDataChanged }: { onDataChanged: () => void }) 
     setLoading(true);
     try {
       const snapshot = await getDocs(websitesCollection);
-      setRows(snapshot.docs.map((item) => ({ ...emptyWebsite(item.id), ...item.data(), id: item.id } as Website)).sort((a, b) => Number(a.view_order || 9999) - Number(b.view_order || 9999)));
+      setRows(snapshot.docs.map((item) => repairKnownWebsiteArabic({ ...emptyWebsite(item.id), ...item.data(), id: item.id } as Website)).sort((a, b) => Number(a.view_order || 9999) - Number(b.view_order || 9999)));
       setError("");
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Unable to load websites.");

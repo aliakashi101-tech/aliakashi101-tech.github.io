@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, orderBy, where } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from './firebase';
+import { starterWebsites } from './admin-reference/lib/websiteData';
+
+function repairKnownWebsiteArabic(website) {
+  const starter = starterWebsites.find((item) => item.id === website.id || item.name_en === website.name_en);
+  if (!starter) return website;
+  const isMissingOrCorrupt = (value) => !value || value.includes('?');
+  return {
+    ...website,
+    name_ar: isMissingOrCorrupt(website.name_ar) ? starter.name_ar : website.name_ar,
+    description_ar: isMissingOrCorrupt(website.description_ar) ? starter.description_ar : website.description_ar,
+  };
+}
 
 function localized(value, language, fallback = '') {
   if (typeof value === 'string') return value || fallback;
@@ -159,7 +171,8 @@ function updatePublicPage(content, experiences, products, websites, language) {
   setText(websiteSection?.querySelector('.section-head > p'), localized(websiteContent.subtitle, language, language === 'ar' ? 'إليك مواقع عملت عليها. افتح أيًّا منها لاستكشاف التجربة مباشرةً.' : 'A couple of websites I’ve worked on. Open each to explore the live experience.'));
   if (websites !== null && websiteSection) {
     const grid = websiteSection.querySelector('.website-grid');
-    if (grid) grid.replaceChildren(...websites.map((website) => {
+    if (grid) grid.replaceChildren(...websites.map((storedWebsite) => {
+      const website = repairKnownWebsiteArabic(storedWebsite);
       const card = document.createElement('article'); card.className = 'website-card';
       const logo = document.createElement('div'); logo.className = `website-logo${website.image_theme === 'dark' ? ' billionaire-logo' : ''}`;
       if (website.image) { const image = document.createElement('img'); image.src = website.image; image.alt = localized(website.name_en ? { en: website.name_en, ar: website.name_ar } : website.name, language); image.loading = 'lazy'; logo.append(image); }
