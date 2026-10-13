@@ -11,12 +11,6 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import {
-  getDownloadURL,
-  getStorage,
-  ref as storageRef,
-  uploadBytes,
-} from "firebase/storage";
-import {
   ArrowDown,
   ArrowUp,
   Check,
@@ -31,6 +25,8 @@ import {
 } from "lucide-react";
 import { useI18n } from "../context/LanguageContext";
 import { firebaseApp } from "../lib/firebase";
+import { PreviewImage } from "./PreviewImage";
+import { uploadImageFile } from "../lib/uploadImage";
 import {
   normalizeProduct,
   type ProductRecord,
@@ -67,7 +63,6 @@ type ProductsAdminProps = {
 };
 
 const firestore = getFirestore(firebaseApp);
-const storage = getStorage(firebaseApp);
 const productsCollection = collection(firestore, "products");
 
 function emptyLocalized(): LocalizedInput {
@@ -309,12 +304,12 @@ function ProductEditor({
               <Upload size={16} />{text("Upload cover", "رفع الغلاف")}
             </label>
           </div>
-          {form.coverImage && <img src={form.coverImage} alt="" className="h-40 w-full rounded-xl border border-zinc-800 bg-zinc-950 object-contain p-3" />}
+          {form.coverImage && <PreviewImage src={form.coverImage} className="h-40 w-full rounded-xl border border-zinc-800 bg-zinc-950 object-contain p-3" />}
           <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400">
             <input type="file" accept="image/*" multiple className="hidden" disabled={uploading} onChange={(event) => { const files = Array.from(event.target.files ?? []); if (files.length) onUploadGallery(files); event.target.value = ""; }} />
             <ImagePlus size={16} />{text("Upload gallery images", "رفع صور المعرض")}
           </label>
-          {form.gallery.length > 0 && <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{form.gallery.map((image) => <div key={image} className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950"><img src={image} alt="" className="h-24 w-full object-contain p-2" /><button type="button" onClick={() => update("gallery", form.gallery.filter((item) => item !== image))} className="absolute end-1 top-1 rounded-lg bg-black/80 p-1.5 text-zinc-400 opacity-0 transition-opacity group-hover:opacity-100 hover:text-red-300" aria-label={text("Remove image", "حذف الصورة")}><Trash2 size={14} /></button></div>)}</div>}
+          {form.gallery.length > 0 && <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{form.gallery.map((image) => <div key={image} className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950"><PreviewImage src={image} className="h-24 w-full object-contain p-2" /><button type="button" onClick={() => update("gallery", form.gallery.filter((item) => item !== image))} className="absolute end-1 top-1 rounded-lg bg-black/80 p-1.5 text-zinc-400 opacity-0 transition-opacity group-hover:opacity-100 hover:text-red-300" aria-label={text("Remove image", "حذف الصورة")}><Trash2 size={14} /></button></div>)}</div>}
         </section>
 
         <section className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4" aria-labelledby="product-features-heading">
@@ -463,10 +458,7 @@ export function ProductsAdmin({ onDataChanged }: ProductsAdminProps) {
     setUploading(true);
     setError("");
     try {
-      const safeName = file.name.replace(/[^a-z0-9._-]/gi, "-");
-      const imageRef = storageRef(storage, `products/${editor.id ?? "new"}/${Date.now()}-${safeName}`);
-      await uploadBytes(imageRef, file);
-      const url = await getDownloadURL(imageRef);
+      const url = await uploadImageFile(file, `products/${editor.id ?? "new"}`);
       setEditor((current) => {
         if (!current) return current;
         return gallery
@@ -523,7 +515,7 @@ export function ProductsAdmin({ onDataChanged }: ProductsAdminProps) {
 
       {(message || error) && <div className={`flex items-start gap-3 rounded-xl border px-4 py-3 text-sm ${error ? "border-red-500/40 bg-red-500/5 text-red-200" : "border-emerald-500/40 bg-emerald-500/5 text-emerald-200"}`} role="status"><Check size={17} className="mt-0.5 shrink-0" /><span>{error || message}</span></div>}
 
-      {loading ? <div className="h-48 animate-pulse rounded-2xl bg-zinc-900" /> : rows.length ? <div className="overflow-x-auto rounded-2xl border border-zinc-800"><table className="min-w-[860px] w-full text-start text-sm"><thead className="bg-zinc-950/80 text-xs uppercase tracking-[0.12em] text-zinc-500"><tr><th className="px-4 py-4 font-medium">{text("Product", "المنتج")}</th><th className="px-4 py-4 font-medium">{text("Order", "الترتيب")}</th><th className="px-4 py-4 font-medium">{text("Links", "الروابط")}</th><th className="px-4 py-4 font-medium">{text("Status", "الحالة")}</th><th className="px-4 py-4 text-end font-medium">{text("Actions", "الإجراءات")}</th></tr></thead><tbody className="divide-y divide-zinc-800">{rows.map((row, index) => <tr key={row.id ?? `starter-${index}`} className="bg-zinc-900/40 transition-colors hover:bg-zinc-800/40"><td className="px-4 py-4"><div className="flex items-center gap-3">{row.coverImage ? <img src={row.coverImage} alt="" className="h-11 w-14 rounded-lg border border-zinc-800 bg-zinc-950 object-contain p-1" /> : <span className="flex h-11 w-14 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-700"><ImagePlus size={17} /></span>}<div className="min-w-0"><div className="truncate font-medium text-white">{row.name.en || row.name.ar || text("Unnamed product", "منتج بدون اسم")}</div><div className="truncate text-xs text-zinc-600">{row.name.ar || text("Arabic name not set", "لم تتم إضافة العربية")}</div></div></div></td><td className="px-4 py-4"><div className="flex items-center gap-1"><button type="button" onClick={() => moveProduct(index, -1)} disabled={index === 0} className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-800 hover:text-white disabled:opacity-30" aria-label={text("Move up", "تحريك للأعلى")}><ArrowUp size={15} /></button><span className="min-w-7 text-center text-zinc-300">{row.viewOrder || index + 1}</span><button type="button" onClick={() => moveProduct(index, 1)} disabled={index === rows.length - 1} className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-800 hover:text-white disabled:opacity-30" aria-label={text("Move down", "تحريك للأسفل")}><ArrowDown size={15} /></button></div></td><td className="px-4 py-4 text-zinc-400">{[row.landingUrl, row.dashboardUrl, row.demoVideoUrl].filter(Boolean).length}</td><td className="px-4 py-4"><span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${row.hidden ? "bg-zinc-800 text-zinc-400" : "bg-emerald-400/10 text-emerald-300"}`}><span className={`h-1.5 w-1.5 rounded-full ${row.hidden ? "bg-zinc-500" : "bg-emerald-400"}`} />{row.hidden ? statusLabel.hidden : statusLabel.active}</span></td><td className="px-4 py-4"><div className="flex justify-end gap-2"><button type="button" onClick={() => setEditor({ ...row })} className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"><Pencil size={15} />{text("Edit", "تعديل")}</button></div></td></tr>)}</tbody></table></div> : <div className="rounded-2xl border border-dashed border-zinc-800 px-6 py-12 text-center text-sm text-zinc-500">{text("No products yet.", "لا توجد منتجات بعد.")}</div>}
+      {loading ? <div className="h-48 animate-pulse rounded-2xl bg-zinc-900" /> : rows.length ? <div className="overflow-x-auto rounded-2xl border border-zinc-800"><table className="min-w-[860px] w-full text-start text-sm"><thead className="bg-zinc-950/80 text-xs uppercase tracking-[0.12em] text-zinc-500"><tr><th className="px-4 py-4 font-medium">{text("Product", "المنتج")}</th><th className="px-4 py-4 font-medium">{text("Order", "الترتيب")}</th><th className="px-4 py-4 font-medium">{text("Links", "الروابط")}</th><th className="px-4 py-4 font-medium">{text("Status", "الحالة")}</th><th className="px-4 py-4 text-end font-medium">{text("Actions", "الإجراءات")}</th></tr></thead><tbody className="divide-y divide-zinc-800">{rows.map((row, index) => <tr key={row.id ?? `starter-${index}`} className="bg-zinc-900/40 transition-colors hover:bg-zinc-800/40"><td className="px-4 py-4"><div className="flex items-center gap-3">{row.coverImage ? <PreviewImage compact src={row.coverImage} className="h-11 w-14 rounded-lg border border-zinc-800 bg-zinc-950 object-contain p-1" /> : <span className="flex h-11 w-14 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-700"><ImagePlus size={17} /></span>}<div className="min-w-0"><div className="truncate font-medium text-white">{row.name.en || row.name.ar || text("Unnamed product", "منتج بدون اسم")}</div><div className="truncate text-xs text-zinc-600">{row.name.ar || text("Arabic name not set", "لم تتم إضافة العربية")}</div></div></div></td><td className="px-4 py-4"><div className="flex items-center gap-1"><button type="button" onClick={() => moveProduct(index, -1)} disabled={index === 0} className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-800 hover:text-white disabled:opacity-30" aria-label={text("Move up", "تحريك للأعلى")}><ArrowUp size={15} /></button><span className="min-w-7 text-center text-zinc-300">{row.viewOrder || index + 1}</span><button type="button" onClick={() => moveProduct(index, 1)} disabled={index === rows.length - 1} className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-800 hover:text-white disabled:opacity-30" aria-label={text("Move down", "تحريك للأسفل")}><ArrowDown size={15} /></button></div></td><td className="px-4 py-4 text-zinc-400">{[row.landingUrl, row.dashboardUrl, row.demoVideoUrl].filter(Boolean).length}</td><td className="px-4 py-4"><span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${row.hidden ? "bg-zinc-800 text-zinc-400" : "bg-emerald-400/10 text-emerald-300"}`}><span className={`h-1.5 w-1.5 rounded-full ${row.hidden ? "bg-zinc-500" : "bg-emerald-400"}`} />{row.hidden ? statusLabel.hidden : statusLabel.active}</span></td><td className="px-4 py-4"><div className="flex justify-end gap-2"><button type="button" onClick={() => setEditor({ ...row })} className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"><Pencil size={15} />{text("Edit", "تعديل")}</button></div></td></tr>)}</tbody></table></div> : <div className="rounded-2xl border border-dashed border-zinc-800 px-6 py-12 text-center text-sm text-zinc-500">{text("No products yet.", "لا توجد منتجات بعد.")}</div>}
     </div>
   );
 }
