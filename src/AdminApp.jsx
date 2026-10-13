@@ -59,6 +59,7 @@ function Login({ onSignedIn }) {
     try {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, email.trim(), password);
+      // Wait for onAuthStateChanged to confirm the account's admin record.
       onSignedIn();
     } catch (err) { setError(err?.code === 'auth/invalid-credential' || err?.code === 'auth/user-not-found' || err?.code === 'auth/wrong-password' ? copy.invalid : (err?.message || copy.failed)); }
     finally { setBusy(false); }
@@ -196,6 +197,7 @@ export function AdminApp() {
   useEffect(() => {
     if (!auth || !db) { setChecking(false); return undefined; }
     return onAuthStateChanged(auth, async (nextUser) => {
+      setChecking(true);
       if (!nextUser) { setUser(null); setChecking(false); return; }
       try {
         const adminRecord = await getDoc(doc(db, 'adminUsers', nextUser.uid));
@@ -207,7 +209,7 @@ export function AdminApp() {
   }, []);
   if (!isFirebaseConfigured) return <main className="admin-login"><div className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><h1>Firebase setup needed</h1><p className="admin-muted">Add your Firebase web configuration to the Vite environment before using the project manager. See FIREBASE_SETUP.md.</p></div></main>;
   if (checking) return <main className="admin-login"><p className="admin-muted">Checking admin access…</p></main>;
-  if (!user) return <>{message && <p className="admin-global-message" role="status">{message}</p>}<Login onSignedIn={setUser} /></>;
+  if (!user) return <>{message && <p className="admin-global-message" role="status">{message}</p>}<Login onSignedIn={() => setChecking(true)} /></>;
   return <AdminWorkspace
     userEmail={user.email || 'Ali Akashi'}
     onBack={() => { window.location.hash = '/'; }}

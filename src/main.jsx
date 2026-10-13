@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Component, Suspense, lazy, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { isFirebaseConfigured } from './firebaseApp';
 import { starterProjects, localize } from './projectData';
@@ -10,6 +10,17 @@ import './admin-reference/admin.css';
 const AdminApp = lazy(() => import('./AdminApp').then((module) => ({ default: module.AdminApp })));
 const PublicAnalytics = lazy(() => import('./PublicAnalytics'));
 const PublicContentLayer = lazy(() => import('./PublicContentLayer').then((module) => ({ default: module.PublicContentLayer })));
+
+class AdminErrorBoundary extends Component {
+  state = { error: null };
+
+  static getDerivedStateFromError(error) { return { error }; }
+
+  render() {
+    if (!this.state.error) return this.props.children;
+    return <main className="admin-login"><div className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><p className="admin-eyebrow">ADMIN WORKSPACE</p><h1>Admin page couldn’t load</h1><p className="admin-login-description">{this.state.error?.message || 'An unexpected error occurred while opening the admin workspace.'}</p><button type="button" className="admin-secondary" onClick={() => window.location.reload()}>Reload page</button></div></main>;
+  }
+}
 
 function currentLanguage() {
   try { return localStorage.getItem('portfolio-language') === 'ar' ? 'ar' : 'en'; }
@@ -125,7 +136,7 @@ const adminRoot = createRoot(document.getElementById('admin-root'));
 function renderRoute() {
   const isAdmin = window.location.hash.replace(/^#/, '').startsWith('/admin');
   document.body.classList.toggle('admin-mode', isAdmin);
-  if (isAdmin) adminRoot.render(<Suspense fallback={<main className="admin-login"><p className="admin-muted">Loading admin workspace…</p></main>}><AdminApp /></Suspense>);
+  if (isAdmin) adminRoot.render(<AdminErrorBoundary><Suspense fallback={<main className="admin-login"><p className="admin-muted">Loading admin workspace…</p></main>}><AdminApp /></Suspense></AdminErrorBoundary>);
   else adminRoot.render(null);
 }
 window.addEventListener('hashchange', renderRoute);
