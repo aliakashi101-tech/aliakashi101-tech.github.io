@@ -19,7 +19,9 @@ const topbar = document.getElementById('topbar');
       const target = document.getElementById(sectionId === 'home' ? 'topbar' : sectionId);
       if (!target) return;
       event.preventDefault();
-      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      if (sectionId === 'home') window.scrollTo({ top: 0, behavior });
+      else target.scrollIntoView({ behavior });
     });
     const translations = {
       'Intro':'المقدمة','About':'نبذة عني','Experience':'الخبرة','Websites':'المواقع','Projects':'المشاريع','Skills':'المهارات','Contact':'تواصل','Resume ↗':'السيرة الذاتية ↗',
