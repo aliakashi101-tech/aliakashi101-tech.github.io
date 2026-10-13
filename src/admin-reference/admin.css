@@ -9,6 +9,34 @@
   background-color: var(--black);
 }
 
-.admin-reference-scope .bg-zinc-950 { background-color: var(--black-soft); }
+.admin-reference-scope .bg-black { background-color: var(--black); }
+.admin-reference-scope button { appearance: none; background-color: transparent; border: 0; }
+.admin-reference-scope button[class~="border"] { border-width: 1px; }
+.admin-reference-scope button[class~="border-2"] { border-width: 2px; }
+.admin-reference-scope .bg-zinc-950,
+.admin-reference-scope [class~="bg-zinc-950/40"],
+.admin-reference-scope [class~="bg-zinc-950/50"],
+.admin-reference-scope [class~="bg-zinc-950/80"] { background-color: var(--black-soft); }
+.admin-reference-scope .bg-zinc-900,
+.admin-reference-scope [class~="bg-zinc-900/40"],
+.admin-reference-scope [class~="bg-zinc-900/60"],
+.admin-reference-scope [class~="bg-zinc-900/70"],
+.admin-reference-scope [class~="bg-zinc-900/80"] { background-color: var(--panel); }
+.admin-reference-scope .bg-zinc-800 { background-color: var(--panel-light); }
 .admin-reference-scope .border-zinc-800 { border-color: var(--line); }
+.admin-reference-scope .border-zinc-700 { border-color: #2d4562; }
+.admin-reference-scope .text-zinc-600 { color: var(--gray-dark); }
 .admin-reference-scope .text-zinc-500 { color: var(--gray); }
+.admin-reference-scope .text-zinc-400 { color: #bdcad8; }
+.admin-reference-scope .text-zinc-300 { color: #d2dbe6; }
+.admin-reference-scope .text-cyan-400,
+.admin-reference-scope .text-cyan-300 { color: var(--blue-light); }
+.admin-reference-scope .bg-cyan-400,
+.admin-reference-scope [class~="bg-cyan-400/80"] { background-color: var(--blue-light); }
+.admin-reference-scope [class~="bg-cyan-400/10"] { background-color: #17457735; }
+.admin-reference-scope .border-cyan-400 { border-color: var(--blue-light); }
+.admin-reference-scope [class~="focus:border-cyan-400"]:focus { border-color: var(--blue-light); }
+.admin-reference-scope [class~="hover:border-cyan-400"]:hover { border-color: var(--blue-light); }
+.admin-reference-scope [class~="hover:bg-cyan-300"]:hover { background-color: #a2cefa; }
+.admin-reference-scope [class~="hover:bg-zinc-900"]:hover { background-color: var(--panel); }
+.admin-reference-scope [class~="hover:border-cyan-400"]:hover { border-color: var(--blue-light); }
