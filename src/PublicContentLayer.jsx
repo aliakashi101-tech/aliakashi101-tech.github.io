@@ -52,7 +52,7 @@ function updatePublicPage(content, experiences, products, websites, language) {
   const specialties = (profile.specialties || []).map((item) => localized(item, language)).filter(Boolean);
   const introParts = [localized(profile.description, language), specialties.join(` ${localized(profile.connector, language, language === 'ar' ? 'و' : 'and')} `), localized(profile.extra, language)].filter(Boolean);
   setText(document.querySelector('.hero-description'), introParts.join(' '));
-  const portraitVisible = profile.imageVisible === true;
+  const portraitVisible = profile.imageVisible === true && Boolean(profile.imageUrl);
   const portraitWrap = document.querySelector('.portrait-wrap');
   const mobilePortrait = document.querySelector('.hero-mobile-portrait');
   [portraitWrap, mobilePortrait].forEach((portrait) => {

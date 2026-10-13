@@ -1370,6 +1370,10 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
   };
 
   const uploadProfileImage = async (file: File) => {
+    if (!file.type.startsWith("image/") || file.size >= 10 * 1024 * 1024) {
+      setError(text("Choose an image smaller than 10 MB.", "اختر صورة يقل حجمها عن 10 ميجابايت."));
+      return;
+    }
     setUploading(true);
     setError("");
     try {
@@ -1378,6 +1382,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
       await uploadBytes(imageRef, file);
       const url = await getDownloadURL(imageRef);
       updateSiteDraft("profile", ["imageUrl"], url);
+      updateSiteDraft("profile", ["imageVisible"], true);
       showMessage(text("Profile image uploaded.", "تم رفع صورة الملف الشخصي."));
     } catch (uploadError) {
       setError(uploadError instanceof Error ? uploadError.message : text("Unable to upload image.", "تعذر رفع الصورة."));
@@ -1569,7 +1574,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
                 {[0, 1].map((index) => <LocalizedField key={index} label={`${text("Specialty", "تخصص")} ${index + 1}`} value={draft.specialties[index] ?? localized()} onChange={(value) => updateSiteDraft("profile", ["specialties", String(index)], value)} />)}
               </div>
               <div className="space-y-5">
-                <div className="space-y-3"><p className="text-sm font-medium text-zinc-300">{text("Portrait image", "صورة الملف الشخصي")}</p><div className="flex flex-wrap gap-3"><label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400"><input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadProfileImage(file); event.target.value = ""; }} /><Upload size={16} />{text("Upload file", "رفع ملف")}</label><span className="self-center text-xs text-zinc-600">{uploading ? text("Uploading...", "جاري الرفع...") : text("or paste a URL", "أو ألصق رابطاً")}</span></div><Field label={text("Image URL", "رابط الصورة")} value={draft.imageUrl} onChange={(value) => updateSiteDraft("profile", ["imageUrl"], value)} /></div>
+                <div className="space-y-3"><p className="text-sm font-medium text-zinc-300">{text("Portrait image", "صورة الملف الشخصي")}</p><div className="flex flex-wrap gap-3"><label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400"><input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadProfileImage(file); event.target.value = ""; }} /><Upload size={16} />{uploading ? text("Uploading...", "جاري الرفع...") : text("Upload file", "رفع ملف")}</label><span className="self-center text-xs text-zinc-600">{text("or paste a URL", "أو ألصق رابطاً")}</span>{draft.imageUrl && <button type="button" onClick={() => { updateSiteDraft("profile", ["imageUrl"], ""); updateSiteDraft("profile", ["imageVisible"], false); }} className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 px-3 py-2.5 text-sm text-red-200 hover:bg-red-500/10">{text("Remove portrait", "إزالة الصورة")}</button>}</div><Field label={text("Image URL", "رابط الصورة")} value={draft.imageUrl} onChange={(value) => updateSiteDraft("profile", ["imageUrl"], value)} /></div>
                 <label className="flex items-center gap-3 text-sm text-zinc-300"><input type="checkbox" checked={draft.imageVisible === true} onChange={(event) => updateSiteDraft("profile", ["imageVisible"], event.target.checked)} className="accent-cyan-400" />{text("Show portrait on public website", "إظهار الصورة الشخصية على الموقع")}</label>
                 <Field label={text("Resume URL", "رابط السيرة الذاتية")} value={draft.resumeUrl} onChange={(value) => updateSiteDraft("profile", ["resumeUrl"], value)} />
                 <LocalizedField label={text("Image alt text", "النص البديل للصورة")} value={draft.imageAlt} onChange={(value) => updateSiteDraft("profile", ["imageAlt"], value)} />
