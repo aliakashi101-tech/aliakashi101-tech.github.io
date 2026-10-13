@@ -1,0 +1,26 @@
+export const starterWebsites = [
+  {
+    id: "al-rawda-dental-clinic",
+    name_en: "Al Rawda Dental Clinic",
+    name_ar: "عيادة الروضة لطب الأسنان",
+    description_en: "Clinic website",
+    description_ar: "موقع عيادة أسنان",
+    url: "https://al-rawda-dental-clinic.vercel.app/",
+    image: "/al-rawda-logo.png",
+    image_theme: "light",
+    view_order: 1,
+    hidden: false,
+  },
+  {
+    id: "billionaire-cardz",
+    name_en: "Billionaire Cardz",
+    name_ar: "بيليونير كاردز",
+    description_en: "Trading card website",
+    description_ar: "موقع بطاقات تداول",
+    url: "https://billionairecardz.com/",
+    image: "/billionairecardz-project.jpg",
+    image_theme: "dark",
+    view_order: 2,
+    hidden: false,
+  },
+];

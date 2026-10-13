@@ -48,6 +48,7 @@ import {
   ListChecks,
   LogOut,
   Menu,
+  Monitor,
   Pencil,
   Plus,
   RefreshCw,
@@ -80,6 +81,7 @@ import {
 import { VisitorAnalytics } from "./VisitorAnalytics";
 import { CvBuilder } from "./CvBuilder";
 import { ProductsAdmin } from "./ProductsAdmin";
+import { WebsitesAdmin } from "./WebsitesAdmin";
 import { starterProjects } from "../../projectData";
 
 const firestore = getFirestore(firebaseApp);
@@ -165,6 +167,7 @@ type AdminModule =
   | "about"
   | "experience"
   | "products"
+  | "websites"
   | "projects"
   | "skills"
   | "contact"
@@ -218,6 +221,12 @@ const moduleDefinitions: Array<{
     label: { en: "Products", ar: "المنتجات" },
     description: { en: "Founder-built SaaS", ar: "منتجات SaaS بنيتها" },
     icon: Sparkles,
+  },
+  {
+    key: "websites",
+    label: { en: "Websites", ar: "مواقع الويب" },
+    description: { en: "Selected website work", ar: "أعمال المواقع المختارة" },
+    icon: Monitor,
   },
   {
     key: "projects",
@@ -476,6 +485,7 @@ function defaultSiteContent(): SiteDrafts {
         about: true,
         experience: true,
         products: true,
+        websites: true,
         projects: true,
         skills: true,
         contact: true,
@@ -1805,6 +1815,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
       case "about": return renderAbout();
       case "experience": return renderExperience();
       case "products": return <ProductsAdmin onDataChanged={notifyChange} />;
+      case "websites": return <WebsitesAdmin onDataChanged={notifyChange} />;
       case "projects":
         return projectRoute
           ? projectEditor

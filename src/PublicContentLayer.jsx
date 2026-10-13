@@ -30,12 +30,13 @@ function setHeading(element, first, second) {
   }
 }
 
-function updatePublicPage(content, experiences, products, language) {
+function updatePublicPage(content, experiences, products, websites, language) {
   const profile = content.profile || {};
   const about = content.about || {};
   const skills = content.skills || {};
   const contact = content.contact || {};
   const settings = content.settings || {};
+  const websiteContent = content.websites || {};
   const profileName = profile.name || {};
 
   setText(document.querySelector('.hero-copy .eyebrow'), localized(profile.greeting, language));
@@ -138,7 +139,32 @@ function updatePublicPage(content, experiences, products, language) {
   });
 
   const visibility = settings.sectionVisibility || {};
-  for (const sectionName of ['about', 'experience', 'products', 'projects', 'skills', 'contact']) {
+  const websiteSection = document.getElementById('websites');
+  setText(websiteSection?.querySelector('.section-kicker'), localized(websiteContent.kicker, language, language === 'ar' ? 'مواقع عمل مختارة' : 'Selected website work'));
+  setHeading(websiteSection?.querySelector('.section-head h2'), localized(websiteContent.title?.primary, language, language === 'ar' ? 'تجارب رقمية' : 'Digital experiences'), localized(websiteContent.title?.accent, language, language === 'ar' ? 'على أرض الواقع.' : 'in the wild.'));
+  setText(websiteSection?.querySelector('.section-head > p'), localized(websiteContent.subtitle, language, language === 'ar' ? 'إليك مواقع عملت عليها. افتح أيًّا منها لاستكشاف التجربة مباشرةً.' : 'A couple of websites I’ve worked on. Open each to explore the live experience.'));
+  if (websites !== null && websiteSection) {
+    const grid = websiteSection.querySelector('.website-grid');
+    if (grid) grid.replaceChildren(...websites.map((website) => {
+      const card = document.createElement('article'); card.className = 'website-card';
+      const logo = document.createElement('div'); logo.className = `website-logo${website.image_theme === 'dark' ? ' billionaire-logo' : ''}`;
+      if (website.image) { const image = document.createElement('img'); image.src = website.image; image.alt = localized(website.name_en ? { en: website.name_en, ar: website.name_ar } : website.name, language); image.loading = 'lazy'; logo.append(image); }
+      const body = document.createElement('div');
+      const title = document.createElement('h3'); title.textContent = localized(website.name_en ? { en: website.name_en, ar: website.name_ar } : website.name, language);
+      const description = document.createElement('p'); description.textContent = localized(website.description_en ? { en: website.description_en, ar: website.description_ar } : website.description, language);
+      body.append(title, description);
+      try {
+        const destination = new URL(website.url);
+        if (['http:', 'https:'].includes(destination.protocol)) {
+          const anchor = document.createElement('a'); anchor.className = 'website-link'; anchor.href = destination.href; anchor.target = '_blank'; anchor.rel = 'noopener noreferrer';
+          anchor.append(document.createTextNode(language === 'ar' ? 'زيارة الموقع ' : 'Visit website '));
+          const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden', 'true'); arrow.textContent = '↗'; anchor.append(arrow); body.append(anchor);
+        }
+      } catch { /* Ignore malformed external links in stored content. */ }
+      card.append(logo, body); return card;
+    }));
+  }
+  for (const sectionName of ['about', 'experience', 'products', 'websites', 'projects', 'skills', 'contact']) {
     const section = document.getElementById(sectionName);
     if (section && visibility[sectionName] === false) section.hidden = true;
     else if (section) section.hidden = false;
@@ -204,6 +230,7 @@ export function PublicContentLayer() {
   const [content, setContent] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [products, setProducts] = useState([]);
+  const [websites, setWebsites] = useState(null);
 
   useEffect(() => {
     const update = (event) => setLanguage(event.detail === 'ar' ? 'ar' : 'en');
@@ -222,9 +249,12 @@ export function PublicContentLayer() {
     const stopProducts = onSnapshot(query(collection(db, 'products'), where('hidden', '==', false), orderBy('view_order', 'asc')), (snapshot) => {
       setProducts(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })));
     }, (error) => console.error('Unable to load editable products', error));
-    return () => { stopContent(); stopExperience(); stopProducts(); };
+    const stopWebsites = onSnapshot(query(collection(db, 'websites'), where('hidden', '==', false), orderBy('view_order', 'asc')), (snapshot) => {
+      setWebsites(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })));
+    }, (error) => console.error('Unable to load editable websites', error));
+    return () => { stopContent(); stopExperience(); stopProducts(); stopWebsites(); };
   }, []);
 
-  useEffect(() => updatePublicPage(content, experiences, products, language), [content, experiences, products, language]);
+  useEffect(() => updatePublicPage(content, experiences, products, websites, language), [content, experiences, products, websites, language]);
   return null;
 }

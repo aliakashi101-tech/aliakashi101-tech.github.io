@@ -25,6 +25,14 @@
       ]
     },
     {
+      "collectionGroup": "websites",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hidden", "order": "ASCENDING" },
+        { "fieldPath": "view_order", "order": "ASCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "analytics_events",
       "queryScope": "COLLECTION",
       "fields": [

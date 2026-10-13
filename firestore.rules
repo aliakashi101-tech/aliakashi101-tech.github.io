@@ -52,6 +52,11 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /websites/{websiteId} {
+      allow read: if isAdmin() || resource.data.hidden == false;
+      allow create, update, delete: if isAdmin();
+    }
+
     match /site_content/{documentId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
