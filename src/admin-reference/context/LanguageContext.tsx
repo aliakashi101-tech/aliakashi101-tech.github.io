@@ -58,11 +58,11 @@ export const translations = {
       { label: 'المهارات', href: '#skills' }, { label: 'تواصل', href: '#contact' },
     ], toggleLabel: 'English', toggleAria: 'التبديل إلى الإنجليزية' },
     hero: {
-      greeting: 'مرحباً، أنا', name: { first: 'علي', last: 'أكاشي' },
+      greeting: 'مرحباً، أنا', name: { first: 'علي', last: 'عكايشي' },
       description: 'أحوّل البيانات المعقدة إلى رؤى واضحة وأدوات عملية باستخدام Python وSQL وتعلّم الآلة ومعالجة اللغة الطبيعية وتصوير البيانات.',
       specialties: [], connector: 'و', extra: '',
       primaryCta: 'استكشف أعمالي', secondaryCta: 'لنتواصل', resumeButton: 'عرض السيرة الذاتية',
-      imageAlt: 'صورة علي أكاشي',
+      imageAlt: 'صورة علي عكايشي',
     },
     about: {
       title: 'شغوف بالبيانات.', highlight: 'أركّز على النتائج.',

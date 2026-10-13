@@ -54,9 +54,11 @@ function updatePublicPage(content, experiences, products, websites, language) {
   setText(document.querySelector('.hero-copy .eyebrow'), localized(profile.greeting, language));
   const heroName = document.querySelector('.hero-copy h1');
   if (heroName && (profileName.first || profileName.last)) {
-    const first = localized(profileName.first, language, 'Ali');
-    const last = localized(profileName.last, language, 'Akashi');
+    const first = language === 'ar' ? 'علي' : localized(profileName.first, language, 'Ali');
+    const last = language === 'ar' ? 'عكايشي' : localized(profileName.last, language, 'Akashi');
     heroName.replaceChildren(document.createTextNode(first));
+    heroName.lang = language;
+    heroName.dir = language === 'ar' ? 'rtl' : 'ltr';
     const surname = document.createElement('span');
     surname.textContent = last;
     heroName.append(document.createElement('br'), surname);
