@@ -66,6 +66,14 @@ function updatePublicPage(content, experiences, products, websites, language) {
   const specialties = (profile.specialties || []).map((item) => localized(item, language)).filter(Boolean);
   const introParts = [localized(profile.description, language), specialties.join(` ${localized(profile.connector, language, language === 'ar' ? 'و' : 'and')} `), localized(profile.extra, language)].filter(Boolean);
   setText(document.querySelector('.hero-description'), introParts.join(' '));
+  const heroDescription = document.querySelector('.hero-description');
+  const highlight = ['clear insights and useful tools', 'رؤى واضحة وأدوات عملية'].find((phrase) => heroDescription?.textContent.includes(phrase));
+  if (heroDescription && highlight) {
+    const [before, after] = heroDescription.textContent.split(highlight);
+    const strong = document.createElement('strong');
+    strong.textContent = highlight;
+    heroDescription.replaceChildren(before, strong, after);
+  }
   const portraitVisible = profile.imageVisible === true && Boolean(profile.imageUrl);
   const portraitWrap = document.querySelector('.portrait-wrap');
   const mobilePortrait = document.querySelector('.hero-mobile-portrait');
