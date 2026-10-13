@@ -26,6 +26,7 @@ import {
   getStorage,
   ref as storageRef,
   uploadBytes,
+  uploadBytesResumable,
 } from "firebase/storage";
 import {
   Activity,
@@ -1009,6 +1010,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [profileUploadProgress, setProfileUploadProgress] = useState(0);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
@@ -1019,6 +1021,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
   const [orderDirty, setOrderDirty] = useState(false);
   const [activeSkillTrackIndex, setActiveSkillTrackIndex] = useState(0);
   const skillTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const profileUploadCancelRef = useRef<(() => void) | null>(null);
 
   const showMessage = useCallback((nextMessage: string) => {
     setMessage(nextMessage);
@@ -1327,7 +1330,10 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
       const safeName = file.name.replace(/[^a-z0-9._-]/gi, "-");
       const imageRef = storageRef(storage, `${collectionName}/${form.id ?? "new"}/${Date.now()}-${safeName}`);
       await uploadBytes(imageRef, file);
-      const url = await getDownloadURL(imageRef);
+      const url = await new Promise<string>((resolve, reject) => {
+        const timeout = window.setTimeout(() => reject(new Error(text("Upload finished, but getting the image URL timed out. Please try again.", "اكتمل الرفع لكن تعذر جلب رابط الصورة. حاول مجدداً."))), 15_000);
+        getDownloadURL(imageRef).then((downloadUrl) => { window.clearTimeout(timeout); resolve(downloadUrl); }, (downloadError) => { window.clearTimeout(timeout); reject(downloadError); });
+      });
       if (collectionName === "projects") {
         updateProjectEditor({ ...(form as ProjectForm), image: url });
       } else {
@@ -1375,11 +1381,31 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
       return;
     }
     setUploading(true);
+    setProfileUploadProgress(0);
     setError("");
     try {
       const safeName = file.name.replace(/[^a-z0-9._-]/gi, "-");
       const imageRef = storageRef(storage, `site_content/profile/${Date.now()}-${safeName}`);
-      await uploadBytes(imageRef, file);
+      const task = uploadBytesResumable(imageRef, file, { contentType: file.type });
+      let timedOut = false;
+      let unsubscribe = () => {};
+      const timeout = window.setTimeout(() => { timedOut = true; task.cancel(); }, 45_000);
+      await new Promise<void>((resolve, reject) => {
+        unsubscribe = task.on("state_changed", (snapshot) => {
+          setProfileUploadProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
+        }, (uploadError) => {
+          window.clearTimeout(timeout);
+          unsubscribe();
+          profileUploadCancelRef.current = null;
+          reject(timedOut ? new Error(text("Upload timed out. Check your connection and try again.", "انتهت مهلة الرفع. تحقق من الاتصال وحاول مجدداً.")) : uploadError);
+        }, () => {
+          window.clearTimeout(timeout);
+          unsubscribe();
+          profileUploadCancelRef.current = null;
+          resolve();
+        });
+        profileUploadCancelRef.current = () => task.cancel();
+      });
       const url = await getDownloadURL(imageRef);
       updateSiteDraft("profile", ["imageUrl"], url);
       updateSiteDraft("profile", ["imageVisible"], true);
@@ -1387,6 +1413,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
     } catch (uploadError) {
       setError(uploadError instanceof Error ? uploadError.message : text("Unable to upload image.", "تعذر رفع الصورة."));
     } finally {
+      profileUploadCancelRef.current = null;
       setUploading(false);
     }
   };
@@ -1574,7 +1601,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
                 {[0, 1].map((index) => <LocalizedField key={index} label={`${text("Specialty", "تخصص")} ${index + 1}`} value={draft.specialties[index] ?? localized()} onChange={(value) => updateSiteDraft("profile", ["specialties", String(index)], value)} />)}
               </div>
               <div className="space-y-5">
-                <div className="space-y-3"><p className="text-sm font-medium text-zinc-300">{text("Portrait image", "صورة الملف الشخصي")}</p><div className="flex flex-wrap gap-3"><label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400"><input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadProfileImage(file); event.target.value = ""; }} /><Upload size={16} />{uploading ? text("Uploading...", "جاري الرفع...") : text("Upload image", "رفع صورة")}</label><span className="self-center text-xs text-zinc-600">{text("or paste a URL", "أو ألصق رابطاً")}</span><button type="button" disabled={!draft.imageUrl} onClick={() => { updateSiteDraft("profile", ["imageUrl"], ""); updateSiteDraft("profile", ["imageVisible"], false); }} className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 px-3 py-2.5 text-sm text-red-200 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-40">{text("Remove image", "إزالة الصورة")}</button></div><Field label={text("Image URL", "رابط الصورة")} value={draft.imageUrl} onChange={(value) => updateSiteDraft("profile", ["imageUrl"], value)} /></div>
+                <div className="space-y-3"><p className="text-sm font-medium text-zinc-300">{text("Portrait image", "صورة الملف الشخصي")}</p><div className="flex flex-wrap gap-3"><label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400"><input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadProfileImage(file); event.target.value = ""; }} /><Upload size={16} />{uploading ? text(`Uploading image… ${profileUploadProgress}%`, `جاري رفع الصورة… ${profileUploadProgress}٪`) : text("Upload image", "رفع صورة")}</label>{uploading && <button type="button" onClick={() => profileUploadCancelRef.current?.()} className="rounded-xl border border-zinc-700 px-3 py-2.5 text-sm text-zinc-300 hover:border-red-400 hover:text-red-200">{text("Cancel upload", "إلغاء الرفع")}</button>}<span className="self-center text-xs text-zinc-600">{text("or paste a URL", "أو ألصق رابطاً")}</span><button type="button" disabled={!draft.imageUrl} onClick={() => { updateSiteDraft("profile", ["imageUrl"], ""); updateSiteDraft("profile", ["imageVisible"], false); }} className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 px-3 py-2.5 text-sm text-red-200 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-40">{text("Remove image", "إزالة الصورة")}</button></div><Field label={text("Image URL", "رابط الصورة")} value={draft.imageUrl} onChange={(value) => updateSiteDraft("profile", ["imageUrl"], value)} /></div>
                 <label className="flex items-center gap-3 text-sm text-zinc-300"><input type="checkbox" checked={draft.imageVisible === true} onChange={(event) => updateSiteDraft("profile", ["imageVisible"], event.target.checked)} className="accent-cyan-400" />{text("Show portrait on public website", "إظهار الصورة الشخصية على الموقع")}</label>
                 <Field label={text("Resume URL", "رابط السيرة الذاتية")} value={draft.resumeUrl} onChange={(value) => updateSiteDraft("profile", ["resumeUrl"], value)} />
                 <LocalizedField label={text("Image alt text", "النص البديل للصورة")} value={draft.imageAlt} onChange={(value) => updateSiteDraft("profile", ["imageAlt"], value)} />
