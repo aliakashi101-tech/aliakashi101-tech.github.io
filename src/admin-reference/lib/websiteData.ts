@@ -14,7 +14,7 @@ export const starterWebsites = [
   {
     id: "billionaire-cardz",
     name_en: "Billionaire Cardz",
-    name_ar: "بيليونير كاردز",
+    name_ar: "بليونيركاردز",
     description_en: "Trading card website",
     description_ar: "موقع بطاقات تداول",
     url: "https://billionairecardz.com/",

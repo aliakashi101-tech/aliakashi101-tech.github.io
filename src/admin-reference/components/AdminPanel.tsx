@@ -435,6 +435,7 @@ function defaultSiteContent(): SiteDrafts {
     profile: {
       ...toLocalizedDefaults(en.hero, ar.hero),
       imageUrl: "/profile.jpg",
+      imageVisible: false,
       resumeUrl:
         "https://drive.google.com/file/d/1YLKrw9ptBd9kVzUQLTof7zOql0vpCURJ/view?usp=sharing",
     },
@@ -524,6 +525,7 @@ function normalizeSiteDrafts(remote: Partial<Record<SiteContentKey, Record<strin
   };
   profile.specialties = normalizeLocalizedArray(remote.profile?.specialties, defaults.profile.specialties);
   profile.imageUrl = asString(remote.profile?.imageUrl, defaults.profile.imageUrl);
+  profile.imageVisible = remote.profile?.imageVisible === true;
   profile.resumeUrl = asString(remote.profile?.resumeUrl, defaults.profile.resumeUrl);
 
   const about = { ...defaults.about, ...(remote.about ?? {}) };
@@ -1568,6 +1570,7 @@ export function AdminPanel({ onBack, onDataChanged, userEmail, onSignOut }: Admi
               </div>
               <div className="space-y-5">
                 <div className="space-y-3"><p className="text-sm font-medium text-zinc-300">{text("Portrait image", "صورة الملف الشخصي")}</p><div className="flex flex-wrap gap-3"><label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-zinc-700 px-3 py-2.5 text-sm text-zinc-200 hover:border-cyan-400"><input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadProfileImage(file); event.target.value = ""; }} /><Upload size={16} />{text("Upload file", "رفع ملف")}</label><span className="self-center text-xs text-zinc-600">{uploading ? text("Uploading...", "جاري الرفع...") : text("or paste a URL", "أو ألصق رابطاً")}</span></div><Field label={text("Image URL", "رابط الصورة")} value={draft.imageUrl} onChange={(value) => updateSiteDraft("profile", ["imageUrl"], value)} /></div>
+                <label className="flex items-center gap-3 text-sm text-zinc-300"><input type="checkbox" checked={draft.imageVisible === true} onChange={(event) => updateSiteDraft("profile", ["imageVisible"], event.target.checked)} className="accent-cyan-400" />{text("Show portrait on public website", "إظهار الصورة الشخصية على الموقع")}</label>
                 <Field label={text("Resume URL", "رابط السيرة الذاتية")} value={draft.resumeUrl} onChange={(value) => updateSiteDraft("profile", ["resumeUrl"], value)} />
                 <LocalizedField label={text("Image alt text", "النص البديل للصورة")} value={draft.imageAlt} onChange={(value) => updateSiteDraft("profile", ["imageAlt"], value)} />
                 {draft.imageUrl && <img src={draft.imageUrl} alt="" className="h-40 w-full rounded-xl border border-zinc-800 object-cover" />}

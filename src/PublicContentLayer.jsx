@@ -52,7 +52,21 @@ function updatePublicPage(content, experiences, products, websites, language) {
   const specialties = (profile.specialties || []).map((item) => localized(item, language)).filter(Boolean);
   const introParts = [localized(profile.description, language), specialties.join(` ${localized(profile.connector, language, language === 'ar' ? 'و' : 'and')} `), localized(profile.extra, language)].filter(Boolean);
   setText(document.querySelector('.hero-description'), introParts.join(' '));
-  if (profile.imageUrl) document.querySelectorAll('.portrait-image img,.hero-mobile-portrait').forEach((image) => { image.src = profile.imageUrl; image.alt = localized(profile.imageAlt, language, 'Ali Akashi'); });
+  const portraitVisible = profile.imageVisible === true;
+  const portraitWrap = document.querySelector('.portrait-wrap');
+  const mobilePortrait = document.querySelector('.hero-mobile-portrait');
+  [portraitWrap, mobilePortrait].forEach((portrait) => {
+    if (!portrait) return;
+    const wasHidden = portrait.hidden;
+    portrait.hidden = !portraitVisible;
+    if (portraitVisible && wasHidden) {
+      portrait.classList.remove('portrait-reveal');
+      void portrait.offsetWidth;
+      portrait.classList.add('portrait-reveal');
+      portrait.addEventListener('animationend', () => portrait.classList.remove('portrait-reveal'), { once: true });
+    }
+  });
+  if (portraitVisible && profile.imageUrl) document.querySelectorAll('.portrait-image img,.hero-mobile-portrait').forEach((image) => { image.src = profile.imageUrl; image.alt = localized(profile.imageAlt, language, 'Ali Akashi'); });
   const heroButtons = document.querySelectorAll('.hero-actions a');
   setLabel(heroButtons[0], localized(profile.primaryCta, language));
   setLabel(heroButtons[1], localized(profile.secondaryCta, language));
