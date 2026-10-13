@@ -15,7 +15,7 @@ The portfolio uses Firebase project `ali-portfolio-4b12e`.
 ## Remaining setup
 
 1. Cloud Storage for Firebase requires the Blaze pay-as-you-go plan. In Firebase Console → Build → Storage, click **Get started**, choose the bucket location, then deploy `storage.rules` with `firebase deploy --only storage`. Linking billing can incur charges; review pricing and set budget alerts first. [Firebase Storage setup guide](https://firebase.google.com/docs/storage/web/start)
-2. Run `npm run dev`, open `/#/admin`, and sign in. The Projects section offers **Import current projects** to add Ali’s two existing project cards to Firestore.
+2. Run `npm run dev`, open `/admin`, and sign in. The Projects section offers **Import current projects** to add Ali’s two existing project cards to Firestore.
 3. Push changes to `main` to rebuild and deploy the public site. The six GitHub Actions secrets already match `.env.example`.
 
 The admin workspace includes profile, about, experience, products, projects, skills, contact, settings, visitor analytics, and CV generation. Editable public content is stored in `site_content`; experience and product entries are stored in their own collections. Analytics events include a 90-day expiry timestamp; configure a Firestore TTL policy on `analytics_events.expiresAt` if you want Firestore to delete expired records automatically.

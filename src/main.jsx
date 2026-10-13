@@ -18,7 +18,7 @@ class AdminErrorBoundary extends Component {
 
   render() {
     if (!this.state.error) return this.props.children;
-    return <main className="admin-login"><div className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><p className="admin-eyebrow">ADMIN WORKSPACE</p><h1>Admin page couldn’t load</h1><p className="admin-login-description">{this.state.error?.message || 'An unexpected error occurred while opening the admin workspace.'}</p><button type="button" className="admin-secondary" onClick={() => window.location.reload()}>Reload page</button></div></main>;
+    return <main className="admin-login"><div className="admin-login-card"><a href="/" className="admin-back">← Back to portfolio</a><p className="admin-eyebrow">ADMIN WORKSPACE</p><h1>Admin page couldn’t load</h1><p className="admin-login-description">{this.state.error?.message || 'An unexpected error occurred while opening the admin workspace.'}</p><button type="button" className="admin-secondary" onClick={() => window.location.reload()}>Reload page</button></div></main>;
   }
 }
 
@@ -134,10 +134,10 @@ createRoot(document.getElementById('app-root')).render(<PortfolioApp />);
 
 const adminRoot = createRoot(document.getElementById('admin-root'));
 function renderRoute() {
-  const isAdmin = window.location.hash.replace(/^#/, '').startsWith('/admin');
+  const isAdmin = /^\/admin(?:\/|$)/.test(window.location.pathname);
   document.body.classList.toggle('admin-mode', isAdmin);
   if (isAdmin) adminRoot.render(<AdminErrorBoundary><Suspense fallback={<main className="admin-login"><p className="admin-muted">Loading admin workspace…</p></main>}><AdminApp /></Suspense></AdminErrorBoundary>);
   else adminRoot.render(null);
 }
-window.addEventListener('hashchange', renderRoute);
+window.addEventListener('popstate', renderRoute);
 renderRoute();

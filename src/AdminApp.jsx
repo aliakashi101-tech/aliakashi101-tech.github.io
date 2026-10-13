@@ -67,7 +67,7 @@ function Login({ onSignedIn }) {
   return <main className="admin-login" dir={isArabic ? 'rtl' : 'ltr'}>
     <div className="admin-login-wrap">
       <div className="admin-login-topbar">
-        <a href="#/" className="admin-back">{isArabic ? `${copy.back} ←` : `← ${copy.back}`}</a>
+        <a href="/" className="admin-back">{isArabic ? `${copy.back} ←` : `← ${copy.back}`}</a>
         <button type="button" className="admin-language-toggle" onClick={toggleLanguage} lang={isArabic ? 'en' : 'ar'}>{isArabic ? 'English' : 'العربية'}</button>
       </div>
       <form onSubmit={submit} className="admin-login-card">
@@ -181,7 +181,7 @@ function Dashboard({ user, onSignOut }) {
     batch.set(doc(db, 'projects', next.id), { view_order: Number(project.view_order || index + 1), updatedAt: serverTimestamp() }, { merge: true });
     try { await batch.commit(); setNotice('Project order updated.'); } catch (err) { setError(err.message); }
   }
-  return <main className="admin-shell"><header className="admin-header"><a href="#/" className="admin-back">← Portfolio</a><div><p className="admin-eyebrow">ADMIN WORKSPACE</p><h1>Projects</h1></div><div className="admin-account"><span>{user.email}</span><button type="button" className="admin-secondary" onClick={onSignOut}>Sign out</button></div></header>
+  return <main className="admin-shell"><header className="admin-header"><a href="/" className="admin-back">← Portfolio</a><div><p className="admin-eyebrow">ADMIN WORKSPACE</p><h1>Projects</h1></div><div className="admin-account"><span>{user.email}</span><button type="button" className="admin-secondary" onClick={onSignOut}>Sign out</button></div></header>
     <div className="admin-content">{error && <p className="admin-error" role="alert">{error}<button type="button" onClick={() => setError('')}>×</button></p>}{notice && <p className="admin-notice" role="status">{notice}<button type="button" onClick={() => setNotice('')}>×</button></p>}
       {editor ? <ProjectEditor key={editor.id} project={editor} onClose={() => setEditor(null)} onSaved={saved} onError={setError} /> : <>
         <div className="admin-toolbar"><div><h2>Published work</h2><p className="admin-muted">Edit project details, links, images, visibility, and order.</p></div><button type="button" className="admin-primary" onClick={addProject}>＋ Add project</button></div>
@@ -207,12 +207,12 @@ export function AdminApp() {
       finally { setChecking(false); }
     });
   }, []);
-  if (!isFirebaseConfigured) return <main className="admin-login"><div className="admin-login-card"><a href="#/" className="admin-back">← Back to portfolio</a><h1>Firebase setup needed</h1><p className="admin-muted">Add your Firebase web configuration to the Vite environment before using the project manager. See FIREBASE_SETUP.md.</p></div></main>;
+  if (!isFirebaseConfigured) return <main className="admin-login"><div className="admin-login-card"><a href="/" className="admin-back">← Back to portfolio</a><h1>Firebase setup needed</h1><p className="admin-muted">Add your Firebase web configuration to the Vite environment before using the project manager. See FIREBASE_SETUP.md.</p></div></main>;
   if (checking) return <main className="admin-login"><p className="admin-muted">Checking admin access…</p></main>;
   if (!user) return <>{message && <p className="admin-global-message" role="status">{message}</p>}<Login onSignedIn={() => setChecking(true)} /></>;
   return <AdminWorkspace
     userEmail={user.email || 'Ali Akashi'}
-    onBack={() => { window.location.hash = '/'; }}
+    onBack={() => { window.location.assign('/'); }}
     onDataChanged={() => window.dispatchEvent(new CustomEvent('admin-data-updated'))}
     onSignOut={async () => { await signOut(auth); setUser(null); }}
   />;

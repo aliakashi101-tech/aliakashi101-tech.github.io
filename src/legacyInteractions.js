@@ -1,8 +1,26 @@
 export function initializeLegacyPage() {
+    const isAdminPath = /^\/admin(?:\/|$)/.test(window.location.pathname);
+    const initialSection = !isAdminPath ? window.location.hash.slice(1) : '';
+    if (!isAdminPath && window.location.hash && !window.location.hash.startsWith('#/')) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      if (initialSection) requestAnimationFrame(() => {
+        const target = document.getElementById(initialSection === 'home' ? 'topbar' : initialSection);
+        target?.scrollIntoView();
+      });
+    }
 const topbar = document.getElementById('topbar');
     const toggle = document.getElementById('menu-toggle');
     const languageToggle = document.getElementById('language-toggle');
     const navLinks = document.getElementById('nav-links');
+    document.addEventListener('click', event => {
+      const link = event.target.closest?.('a[href^="#"]');
+      if (!link || isAdminPath) return;
+      const sectionId = link.getAttribute('href').slice(1);
+      const target = document.getElementById(sectionId === 'home' ? 'topbar' : sectionId);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
     const translations = {
       'About':'نبذة عني','Experience':'الخبرة','Websites':'المواقع','Projects':'المشاريع','Skills':'المهارات','Contact':'تواصل','Resume ↗':'السيرة الذاتية ↗',
       'Data Analyst · Dubai, UAE':'محلل بيانات · دبي، الإمارات العربية المتحدة',
@@ -92,7 +110,8 @@ const topbar = document.getElementById('topbar');
       if (!copyrightTrigger || document.body.classList.contains('admin-mode')) return;
       const selection = window.getSelection();
       if (selection?.toString().replace(/\s+/g, ' ').trim() === copyrightTrigger.textContent.replace(/\s+/g, ' ').trim()) {
-        window.location.hash = '/admin';
+        window.history.pushState(null, '', '/admin');
+        window.dispatchEvent(new PopStateEvent('popstate'));
         selection.removeAllRanges();
       }
     };
