@@ -24,7 +24,7 @@ const topbar = document.getElementById('topbar');
       else target.scrollIntoView({ behavior });
     });
     const translations = {
-      'Intro':'المقدمة','About':'نبذة عني','Experience':'الخبرة','Websites':'المواقع','Projects':'المشاريع','Skills':'المهارات','Contact':'تواصل','Resume ↗':'السيرة الذاتية ↗',
+      'Intro':'المقدمة','About':'نبذة عني','Experience':'الخبرة','Websites':'المواقع','Products':'المنتجات','Projects':'المشاريع','Skills':'المهارات','Contact':'تواصل','Resume ↗':'السيرة الذاتية ↗',
       'Hi, I am':'مرحباً، أنا',
       'I turn complex data into':'أحوّل البيانات المعقدة إلى',
       'clear insights and useful tools':'رؤى واضحة وأدوات عملية',
