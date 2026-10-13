@@ -528,3 +528,4 @@ export function ProductsAdmin({ onDataChanged }: ProductsAdminProps) {
   );
 }
 
+import React from 'react';

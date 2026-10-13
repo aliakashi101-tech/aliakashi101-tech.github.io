@@ -377,3 +377,4 @@ export async function downloadCvPdf(document: CvDocument, filename: string) {
   const blob = await pdf(<CvPdf document={document} />).toBlob();
   downloadBlob(blob, filename);
 }
+import React from 'react';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { deepMerge, loadSiteContent, localizeSiteContent } from '../lib/siteContent';
 
